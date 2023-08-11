@@ -1,0 +1,17 @@
+spec:
+  replicas: 1
+
+config:
+  connectionStrings:
+    postgres: ""
+    storageAccount: ""
+  jwt:
+    audience: ""
+    authority: ""
+  serviceUrls:
+    storageAccount: ""
+  auth0:
+    domain: ""
+    clientId: ""
+    clientSecret: ""
+

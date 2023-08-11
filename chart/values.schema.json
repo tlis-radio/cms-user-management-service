@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft-07/schema#",
+  "properties": {
+    "spec": {
+      "properties": {
+        "replicas": {
+          "type": "integer"
+        }
+      }
+    },
+    "config": {
+      "properties": {
+        "connectionStrings": {
+          "type": "object",
+          "properties": {
+            "postgres": {
+              "type": "string"
+            },
+            "storageAccount": {
+              "type": "string"
+            }
+          }
+        },
+        "jwt": {
+          "type": "object",
+          "properties": {
+            "audience": {
+              "type": "string"
+            },
+            "authority": {
+              "type": "string"
+            }
+          }
+        },
+        "serviceUrls": {
+          "type": "object",
+          "properties": {
+            "storageAccount": {
+              "type": "string"
+            }
+          }
+        },
+        "auth0": {
+          "type": "object",
+          "properties": {
+            "domain": {
+              "type": "string"
+            },
+            "clientId": {
+              "type": "string"
+            },
+            "clientSecret": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    }
+  }
+}

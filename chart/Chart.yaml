@@ -1,0 +1,9 @@
+apiVersion: v2
+name: cms-user-management
+version: 1.0.0
+description: Cms user managemet
+type: application
+keywords:
+  - cms
+  - user-management
+home: www.tlis.sk
