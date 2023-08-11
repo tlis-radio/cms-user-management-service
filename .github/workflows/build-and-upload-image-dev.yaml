@@ -1,14 +1,16 @@
-name: 'Build & Upload Image'
+name: 'Build & Upload Dev Image'
 
 on:
   push:
-    tags:
-      - "*"
+    branches: [ "develop" ]
+
+env:
+  AZURE_CONTAINER_REGISTRY: tliscr
 
 jobs:
   build-container-and-push-to-acr:
     name: 'Build container and push to ACR'
-    environment: 'production'
+    environment: 'development'
     runs-on: ubuntu-latest
     steps:
     # checkout the repo
@@ -22,11 +24,11 @@ jobs:
         password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
     # build and push the image
     - run: |
-        docker build . --file Dockerfile --tag ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/cms-user-management:${{ github.ref_name }}
-        docker push ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/cms-user-management:${{ github.ref_name }} 
+        docker build . --file Dockerfile --tag ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/cms-user-management:${{ github.sha }}
+        docker push ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/cms-user-management:${{ github.sha }}
   build-helm-chart-and-push-to-acr:
     name: 'Build helm chart and push to ACR'
-    environment: 'production'
+    environment: 'development'
     runs-on: ubuntu-latest
     steps:
     # checkout the repo
@@ -43,12 +45,12 @@ jobs:
         echo $ | helm registry login ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io --username ${{ secrets.CONTAINER_REGISTRY_USERNAME }} --password ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
     # package and push the chart
     - name: 'Package chart'
-      run: cd chart && helm package . --app-version ${{ github.ref_name }}
+      run: cd chart && helm package . --app-version ${{ github.sha }}
     # push the chart
     - name: 'Push chart to acr'
       run: cd chart && helm push cms-user-management-* oci://${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/helm
   helm-chart-upgrade:
-    environment: 'production'
+    environment: 'development'
     name: 'Upgrade helm chart'
     permissions:
       actions: read
@@ -89,4 +91,4 @@ jobs:
     # upgrade the chart
     - name: 'Upgrade chart'
       run: |
-        helm upgrade cms-user-management oci://${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/helm/cms-user-management --kube-context tlis --version 1.0.0 --install --create-namespace --namespace cms-production --set config.connectionStrings.postgres="${{ secrets.POSTGRES_CONNECTION_STRING }}"  --set config.connectionStrings.storageAccount="${{ secrets.STORAGE_ACCOUNT_CONNECTION_STRING }}" --set config.jwt.audience="${{ secrets.JWT_AUDIENCE }}" --set config.jwt.authority="${{ secrets.JWT_AUTHORITY }}" --set config.serviceUrls.storageAccount="${{ secrets.STORAGE_ACCOUNT_URL }}" --set config.auth0.domain="${{ secrets.AUTH0_DOMAIN }}" --set config.auth0.clientId="${{ secrets.AUTH0_CLIENT_ID }}" --set config.auth0.clientSecret="${{ secrets.AUTH0_CLIENT_SECRET }}"
+        helm upgrade cms-user-management oci://${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/helm/cms-user-management --kube-context tlis --version 1.0.0 --install --create-namespace --namespace cms-development  --set config.connectionStrings.postgres="${{ secrets.POSTGRES_CONNECTION_STRING }}"  --set config.connectionStrings.storageAccount="${{ secrets.STORAGE_ACCOUNT_CONNECTION_STRING }}" --set config.jwt.audience="${{ secrets.JWT_AUDIENCE }}" --set config.jwt.authority="${{ secrets.JWT_AUTHORITY }}" --set config.serviceUrls.storageAccount="${{ secrets.STORAGE_ACCOUNT_URL }}" --set config.auth0.domain="${{ secrets.AUTH0_DOMAIN }}" --set config.auth0.clientId="${{ secrets.AUTH0_CLIENT_ID }}" --set config.auth0.clientSecret="${{ secrets.AUTH0_CLIENT_SECRET }}"
