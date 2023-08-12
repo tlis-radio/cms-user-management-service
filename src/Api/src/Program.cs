@@ -29,8 +29,6 @@ namespace Tlis.Cms.UserManagement.Api
                 app.UseSwaggerUI();
             }
 
-            app.UseHttpsRedirection();
-
             app.UseAuthentication();
             app.UseAuthorization();
 
