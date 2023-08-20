@@ -1,5 +1,6 @@
 using Riok.Mapperly.Abstractions;
 using Tlis.Cms.UserManagement.Application.Contracts.Api.Requests;
+using Tlis.Cms.UserManagement.Application.Contracts.Api.Responses;
 using Tlis.Cms.UserManagement.Domain.Models;
 
 namespace Tlis.Cms.UserManagement.Application.Mappers;
@@ -15,6 +16,9 @@ internal partial class UserMapper
         
         return entity;
     }
+
+    [MapperIgnoreSource(nameof(User.Id))]
+    public partial UserDetailsGetResponse ToDto(User? entity);
     
     [MapperIgnoreTarget(nameof(User.IsActive))]
     [MapperIgnoreTarget(nameof(User.ProfileImageUrl))]
@@ -41,4 +45,14 @@ internal partial class UserMapper
     [MapperIgnoreTarget(nameof(UserRoleHistory.Role))]
     [MapperIgnoreTarget(nameof(UserRoleHistory.Id))]
     private partial UserRoleHistory MapToUserRoleHistory(ArchiveUserRoleHistoryCreateRequest dto);
+
+    [MapperIgnoreSource(nameof(UserRoleHistory.UserForeignKey))]
+    [MapperIgnoreSource(nameof(UserRoleHistory.RoleForeignKey))]
+    [MapperIgnoreSource(nameof(UserRoleHistory.User))]
+    [MapperIgnoreSource(nameof(UserRoleHistory.Id))]
+    private partial UserDetailsGetResponseUserRoleHistory MapToUserDetailsGetResponseUserRoleHistory(UserRoleHistory entity);
+
+    [MapperIgnoreSource(nameof(Role.Id))]
+    [MapperIgnoreSource(nameof(Role.UserRoleHistory))]
+    private partial UserDetailsGetResponseRole MapToUserDetailsGetResponseRole(Role role);
 }

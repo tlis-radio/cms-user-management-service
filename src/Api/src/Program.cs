@@ -14,13 +14,17 @@ namespace Tlis.Cms.UserManagement.Api
             builder.Services.AddMemoryCache();
             builder.Services.AddControllers();
 
+            builder.Services.ConfigureProblemDetails();
             builder.Services.ConfigureSwagger();
-
             builder.Services.ConfigureAuthorization(builder.Configuration);
+
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);
 
             var app = builder.Build();
+            
+            app.UseExceptionHandler();
+            app.UseStatusCodePages();
 
             // Configure the HTTP request pipeline.
             app.UseSwagger();

@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
@@ -9,47 +10,50 @@ using Tlis.Cms.UserManagement.Infrastructure.Persistence.Interfaces;
 using Tlis.Cms.UserManagement.Infrastructure.Services.Interfaces;
 using UserMapper = Tlis.Cms.UserManagement.Application.Mappers.UserMapper;
 
-namespace Tlis.Cms.UserManagement.Application.RequestHandlers.UserController;
+namespace Tlis.Cms.UserManagement.Application.RequestHandlers;
 
-internal sealed class UserCreateRequestHandler : IRequestHandler<UserCreateRequest, BaseCreateResponse>
+internal sealed class ArchiveUserCreateRequestHandler : IRequestHandler<ArchiveUserCreateRequest, BaseCreateResponse>
 {
     private readonly IUnitOfWork _unitOfWork;
 
     private readonly UserMapper _userMapper;
 
-    private readonly IAuthProviderManagementService _authProviderManagementService;
-
     private readonly IRoleService _roleService;
 
-    public UserCreateRequestHandler(
+    private readonly IAuthProviderManagementService _authProviderManagementService;
+
+    public ArchiveUserCreateRequestHandler(
         IAuthProviderManagementService authProviderManagementService,
-        IUnitOfWork unitOfWork,
         IRoleService roleService,
-        UserMapper userMapper)
+        IUnitOfWork unitOfWork,
+        UserMapper userMapper
+    )
     {
-        _roleService = roleService;
+        _authProviderManagementService = authProviderManagementService;
         _unitOfWork = unitOfWork;
         _userMapper = userMapper;
-        _authProviderManagementService = authProviderManagementService;
+        _roleService = roleService;
     }
 
-    public async Task<BaseCreateResponse> Handle(UserCreateRequest request, CancellationToken cancellationToken)
+    public async Task<BaseCreateResponse> Handle(ArchiveUserCreateRequest request, CancellationToken cancellationToken)
     {
         var userToCreate = _userMapper.ToEntity(request);
-        userToCreate.IsActive = true;
 
-        var role = await _roleService.GetByIdAsync(request.RoleId);
-        if (role is null)
-            throw new UserRoleNotFoundException(request.RoleId);
-
-        userToCreate.RoleHistory = new[]
+        var roleHistory = new List<UserRoleHistory>();
+        foreach (var history in request.RoleHistory)
         {
-            new UserRoleHistory
-            {
-                RoleForeignKey = role.Id,
-                FunctionStartDate = request.FunctionStartDate
-            }
-        };
+            var role = await _roleService.GetByIdAsync(history.RoleId) ?? throw new UserRoleNotFoundException(history.RoleId);
+
+            roleHistory.Add(
+                new UserRoleHistory
+                {
+                    RoleForeignKey = role.Id,
+                    FunctionStartDate = history.FunctionStartDate,
+                    FunctionEndDate = history.FunctionEndDate
+                }
+            );
+        }
+        userToCreate.RoleHistory = roleHistory;
 
         if (!string.IsNullOrEmpty(request.Email) && !string.IsNullOrEmpty(request.Password))
             userToCreate.ExternalId = await _authProviderManagementService.CreateUser(

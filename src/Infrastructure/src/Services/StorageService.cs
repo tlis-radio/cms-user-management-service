@@ -39,7 +39,7 @@ internal sealed class StorageService : IStorageService
         => DeleteFile(_userProfileImagesContainerClient, fileUrl);
 
 
-    public Task<string> UploadUserProfileImage(IFormFile file)
+    public Task<(Guid, string)> UploadUserProfileImage(IFormFile file)
         => UploadFile(_userProfileImagesContainerClient, file, UserProfileImagesContainer);
     
     private async Task<bool> DeleteFile(BlobContainerClient client, string fileUrl)
@@ -57,10 +57,10 @@ internal sealed class StorageService : IStorageService
         }
     }
 
-    private Task<string> UploadFile(BlobContainerClient client, IFormFile file, string containerName, bool overrideFileName = true)
+    private Task<(Guid, string)> UploadFile(BlobContainerClient client, IFormFile file, string containerName, bool overrideFileName = true)
         => UploadFile(client, file.OpenReadStream(), file.FileName, file.ContentType, containerName, overrideFileName);
 
-    private async Task<string> UploadFile(
+    private async Task<(Guid, string)> UploadFile(
         BlobContainerClient client,
         Stream stream,
         string fileName,
@@ -68,7 +68,8 @@ internal sealed class StorageService : IStorageService
         string containerName,
         bool overrideFileName = true)
     {
-        var storageFileName = overrideFileName ? GetStorageFileName(fileName) : fileName;
+        var guid = Guid.NewGuid();
+        var storageFileName = overrideFileName ? GetStorageFileName(guid, fileName) : fileName;
         var blob = client.GetBlobClient(storageFileName);
 
         await blob.UploadAsync(stream, new BlobUploadOptions
@@ -79,8 +80,8 @@ internal sealed class StorageService : IStorageService
             }
         });
 
-        return Path.Combine(_storageAccountUrl, containerName, storageFileName);
+        return (guid, Path.Combine(_storageAccountUrl, containerName, storageFileName));
     }
 
-    private string GetStorageFileName(string fileName) => $"{Guid.NewGuid().ToString()}{Path.GetExtension(fileName)}";
+    private string GetStorageFileName(Guid guid, string fileName) => $"{guid}{Path.GetExtension(fileName)}";
 }

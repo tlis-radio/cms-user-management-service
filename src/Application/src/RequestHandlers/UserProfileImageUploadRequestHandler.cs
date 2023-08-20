@@ -2,12 +2,13 @@ using System.Threading;
 using System.Threading.Tasks;
 using MediatR;
 using Tlis.Cms.UserManagement.Application.Contracts.Api.Requests;
+using Tlis.Cms.UserManagement.Application.Contracts.Api.Responses;
 using Tlis.Cms.UserManagement.Infrastructure.Persistence.Interfaces;
 using Tlis.Cms.UserManagement.Infrastructure.Services.Interfaces;
 
-namespace Tlis.Cms.UserManagement.Application.RequestHandlers.UserController;
+namespace Tlis.Cms.UserManagement.Application.RequestHandlers;
 
-internal sealed class UserProfileImageUploadRequestHandler : IRequestHandler<UserProfileImageUploadRequest, bool>
+internal sealed class UserProfileImageUploadRequestHandler : IRequestHandler<UserProfileImageUploadRequest, BaseCreateResponse?>
 {
     private readonly IUnitOfWork _unitOfWork;
 
@@ -22,17 +23,17 @@ internal sealed class UserProfileImageUploadRequestHandler : IRequestHandler<Use
         _storageService = storageService;
     }
 
-    public async Task<bool> Handle(UserProfileImageUploadRequest request, CancellationToken cancellationToken)
+    public async Task<BaseCreateResponse?> Handle(UserProfileImageUploadRequest request, CancellationToken cancellationToken)
     {
         var user = await _unitOfWork.UserRepository.GetByIdAsync(request.Id, asTracking: true);
-        if (user is null) return false;
+        if (user is null) return null;
 
         if (string.IsNullOrEmpty(user.ProfileImageUrl) is false)
             await _storageService.DeleteUserProfileImage(user.ProfileImageUrl);
 
-        user.ProfileImageUrl = await _storageService.UploadUserProfileImage(request.Image);
+        (var id, user.ProfileImageUrl) = await _storageService.UploadUserProfileImage(request.Image);
         await _unitOfWork.SaveChangesAsync();
 
-        return true;
+        return new BaseCreateResponse { Id = id } ;
     }
 }

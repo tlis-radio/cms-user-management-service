@@ -20,7 +20,7 @@ public interface IGenericRepository<TEntity> where TEntity : BaseEntity
 
     void Update(TEntity entityToUpdate);
 
-    public ValueTask<bool> DeleteByIdAsync(int id);
+    public ValueTask<bool> DeleteByIdAsync(Guid id);
 
     public bool Delete(TEntity toDelete);
 
