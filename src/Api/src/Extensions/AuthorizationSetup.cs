@@ -30,6 +30,9 @@ public static class AuthorizationSetup
             options.AddPolicy(
                 Policy.UserDelete,
                 policy => policy.RequireClaim("permissions", "delete:user"));
+            options.AddPolicy(
+                Policy.UserRead,
+                policy => policy.RequireClaim("permissions", "read:user"));
         });
 
         return services;

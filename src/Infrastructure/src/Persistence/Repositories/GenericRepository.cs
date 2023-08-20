@@ -58,7 +58,7 @@ internal abstract class GenericRepository<TEntity> : IGenericRepository<TEntity>
         dbSet.Update(entity);
     }
 
-    public async ValueTask<bool> DeleteByIdAsync(int id)
+    public async ValueTask<bool> DeleteByIdAsync(Guid id)
     {
         var toDelete = await dbSet.FindAsync(id);
         if (toDelete is null)
