@@ -1,4 +1,5 @@
 using Microsoft.OpenApi.Models;
+using Tlis.Cms.UserManagement.Api.Swagger;
 
 namespace Tlis.Cms.UserManagement.Api.Extensions;
 
@@ -9,6 +10,8 @@ public static class SwaggerSetup
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(c =>
         {
+            // c.SchemaFilter<ProblemDetailsSchemaFilter>();
+            c.OperationFilter<ProblemDetailsOperationFilter>();
             c.EnableAnnotations();
             c.AddSecurityDefinition(
                 "Bearer",

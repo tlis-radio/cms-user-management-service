@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Diagnostics;
+using Microsoft.AspNetCore.WebUtilities;
 using Tlis.Cms.UserManagement.Infrastructure.Exceptions;
 
 namespace Tlis.Cms.UserManagement.Api.Extensions;
@@ -19,10 +20,11 @@ public static class ProblemDetailsSetup
                 {
                     AuthProviderUserAlreadyExistsException _ => StatusCodes.Status409Conflict,
                     AuthProviderBadRequestException _ => StatusCodes.Status400BadRequest,
-                    _ => StatusCodes.Status500InternalServerError
+                    _ => context.ProblemDetails.Status
                 };
-                    
-                context.ProblemDetails.Title = error?.Message;
+
+                context.ProblemDetails.Title = error?.Message
+                    ?? ReasonPhrases.GetReasonPhrase(context.ProblemDetails.Status!.Value);
 
                 context.ProblemDetails.Type = context.ProblemDetails.Status switch
                 {

@@ -37,8 +37,8 @@ public abstract class BaseController : ControllerBase
         var response = await Mediator.Send(request);
 
         return response
-            ? Ok()
-            : BadRequest();
+            ? NoContent()
+            : NotFound();
     }
 
     protected async ValueTask<ActionResult> HandleDelete(IRequest<bool> request)
@@ -46,7 +46,7 @@ public abstract class BaseController : ControllerBase
         var response = await Mediator.Send(request);
 
         return response
-            ? Ok()
+            ? NoContent()
             : BadRequest();
     }
 
