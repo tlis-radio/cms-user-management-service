@@ -16,18 +16,18 @@ internal sealed class UserRepository : GenericRepository<User>, IUserRepository
     {
         var query = ConfigureTracking(dbSet.AsQueryable(), asTracking);
 
-        query.Include(u => u.RoleHistory);
-
-        return query.FirstOrDefaultAsync(u => u.Id == id);
+        return query
+            .Include(u => u.RoleHistory)
+            .FirstOrDefaultAsync(u => u.Id == id);
     }
 
     public Task<User?> GetUserDetailsById(Guid id, bool asTracking)
     {
         var query = ConfigureTracking(dbSet.AsQueryable(), asTracking);
 
-        query.Include(u => u.RoleHistory)
-            !.ThenInclude(rh => rh.Role);
-
-        return query.FirstOrDefaultAsync(u => u.Id == id);
+        return query
+            .Include(u => u.RoleHistory)
+                !.ThenInclude(rh => rh.Role)
+            .FirstOrDefaultAsync(u => u.Id == id);
     }
 }

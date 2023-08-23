@@ -18,7 +18,7 @@ internal partial class UserMapper
     }
 
     [MapperIgnoreSource(nameof(User.Id))]
-    public partial UserDetailsGetResponse ToDto(User? entity);
+    public partial UserDetailsGetResponse? ToDto(User? entity);
     
     [MapperIgnoreTarget(nameof(User.IsActive))]
     [MapperIgnoreTarget(nameof(User.ProfileImageUrl))]
