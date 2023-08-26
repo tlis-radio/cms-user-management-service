@@ -5,12 +5,11 @@ namespace Tlis.Cms.UserManagement.Api.Extensions;
 
 public static class SwaggerSetup
 {
-    public static IServiceCollection ConfigureSwagger(this IServiceCollection services)
+    public static void ConfigureSwagger(this IServiceCollection services)
     {
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen(c =>
         {
-            // c.SchemaFilter<ProblemDetailsSchemaFilter>();
             c.OperationFilter<ProblemDetailsOperationFilter>();
             c.EnableAnnotations();
             c.AddSecurityDefinition(
@@ -40,7 +39,5 @@ public static class SwaggerSetup
                     }
                 });
         });
-
-        return services;
     }
 }

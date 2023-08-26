@@ -10,7 +10,6 @@ namespace Tlis.Cms.UserManagement.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            // Add services to the container.
             builder.Services.AddMemoryCache();
             builder.Services.AddControllers();
 
@@ -26,7 +25,6 @@ namespace Tlis.Cms.UserManagement.Api
             app.UseExceptionHandler();
             app.UseStatusCodePages();
 
-            // Configure the HTTP request pipeline.
             app.UseSwagger();
             app.UseSwaggerUI();
 

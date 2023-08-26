@@ -10,7 +10,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Hosting" Version="2.2.7" />
     <PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
     <PackageReference Include="EFCore.NamingConventions" Version="7.0.2" />
-    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.9">
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.10">
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
@@ -26,8 +26,8 @@
     <PackageReference Include="EntityFrameworkCore.Exceptions.PostgreSQL" Version="6.0.3" />
     <PackageReference Include="Microsoft.Extensions.DependencyInjection" Version="7.0.0" />
     <PackageReference Include="Azure.Storage.Blobs" Version="12.17.0" />
-    <PackageReference Include="Auth0.ManagementApi" Version="7.22.1" />
-    <PackageReference Include="Auth0.AuthenticationApi" Version="7.22.1" />
+    <PackageReference Include="Auth0.ManagementApi" Version="7.22.2" />
+    <PackageReference Include="Auth0.AuthenticationApi" Version="7.22.2" />
     <ProjectReference Include="..\..\Domain\src\Tlis.Cms.UserManagement.Domain.csproj" />
   </ItemGroup>
 

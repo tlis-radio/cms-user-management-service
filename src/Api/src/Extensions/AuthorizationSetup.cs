@@ -5,7 +5,7 @@ namespace Tlis.Cms.UserManagement.Api.Extensions;
 
 public static class AuthorizationSetup
 {
-    public static IServiceCollection ConfigureAuthorization(
+    public static void ConfigureAuthorization(
         this IServiceCollection services,
         ConfigurationManager configuration)
     {
@@ -34,7 +34,5 @@ public static class AuthorizationSetup
                 Policy.UserRead,
                 policy => policy.RequireClaim("permissions", "read:user"));
         });
-
-        return services;
     }
 }

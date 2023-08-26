@@ -8,21 +8,20 @@ public static class ProblemDetailsSetup
 {
     public static void ConfigureProblemDetails(this IServiceCollection services)
     {
-     
         services.AddProblemDetails(options =>
         {
             options.CustomizeProblemDetails = context =>
             {
                 var error = context.HttpContext.Features
                     .Get<IExceptionHandlerPathFeature>()?.Error;
-
+                
                 context.ProblemDetails.Status = error switch
                 {
                     AuthProviderUserAlreadyExistsException _ => StatusCodes.Status409Conflict,
                     AuthProviderBadRequestException _ => StatusCodes.Status400BadRequest,
                     _ => context.ProblemDetails.Status
                 };
-
+                
                 context.ProblemDetails.Title = error?.Message
                     ?? ReasonPhrases.GetReasonPhrase(context.ProblemDetails.Status!.Value);
 

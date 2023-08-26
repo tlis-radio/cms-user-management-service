@@ -1,6 +1,6 @@
 namespace Tlis.Cms.UserManagement.Api.Constants;
 
-public class Policy
+public static class Policy
 {
     public const string UserRead = "UserRead";
 
