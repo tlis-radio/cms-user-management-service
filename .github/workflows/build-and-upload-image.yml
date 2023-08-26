@@ -5,6 +5,9 @@ on:
     tags:
       - "*"
 
+env:
+  AZURE_CONTAINER_REGISTRY: tliscr
+
 jobs:
   build-container-and-push-to-acr:
     name: 'Build container and push to ACR'
