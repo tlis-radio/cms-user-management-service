@@ -10,7 +10,7 @@ This project is meant to be a web api for managing users in a TLIS CMS.
 
 ```mermaid
 flowchart TD
-    A(CMS Api Gateway) <-->|Http| U(CMS User Management)
+    A(CMS Api Gateway) <-->|Http| U(CMS User Management Service)
     U <-->|Read/Write| D[(Postgres)]
     U <-->|Https| Auth[Auth0 Management API]
 ```
