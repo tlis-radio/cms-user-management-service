@@ -19,7 +19,7 @@ public class UnitOfWork : IDisposable, IUnitOfWork
 
     public IUserRoleHistoryRepository UserRoleHistoryRepository => _lazyUserRoleHistoryRepository.Value;
 
-    private bool _disposed = false;
+    private bool _disposed;
 
     private readonly ILogger<UnitOfWork> _logger;
 

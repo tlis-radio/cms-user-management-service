@@ -1,4 +1,3 @@
-using System;
 using EntityFramework.Exceptions.PostgreSQL;
 using Microsoft.EntityFrameworkCore;
 using Tlis.Cms.UserManagement.Domain.Models;
@@ -9,7 +8,7 @@ namespace Tlis.Cms.UserManagement.Infrastructure.Persistence;
 public class UserManagementDbContext : DbContext, IUserManagementDbContext
 {
     public DbSet<Role> Role { get; set; } = null!;
-    public DbSet<Domain.Models.User> User { get; set; } = null!;
+    public DbSet<User> User { get; set; } = null!;
     
     public UserManagementDbContext(DbContextOptions options)
         : base(options)

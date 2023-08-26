@@ -7,16 +7,16 @@ namespace Tlis.Cms.UserManagement.Api.Controllers.Base;
 
 public abstract class BaseController : ControllerBase
 {
-    protected readonly IMediator Mediator;
+    private readonly IMediator _mediator;
 
-    public BaseController(IMediator mediator)
+    protected BaseController(IMediator mediator)
     {
-        Mediator = mediator;
+        _mediator = mediator;
     }
 
     protected async ValueTask<ActionResult<TResponse>> HandleGet<TResponse>(IRequest<TResponse?> request)
     {
-        var response = await Mediator.Send(request);
+        var response = await _mediator.Send(request);
 
         return response is null
             ? NotFound()
@@ -25,7 +25,7 @@ public abstract class BaseController : ControllerBase
 
     protected async ValueTask<ActionResult<BaseCreateResponse>> HandlePost(IRequest<BaseCreateResponse?> request)
     {
-        var response = await Mediator.Send(request);
+        var response = await _mediator.Send(request);
 
         return response is null
             ? BadRequest()
@@ -34,7 +34,7 @@ public abstract class BaseController : ControllerBase
 
     protected async ValueTask<ActionResult> HandlePut(IRequest<bool> request)
     {
-        var response = await Mediator.Send(request);
+        var response = await _mediator.Send(request);
 
         return response
             ? NoContent()
@@ -43,7 +43,7 @@ public abstract class BaseController : ControllerBase
 
     protected async ValueTask<ActionResult> HandleDelete(IRequest<bool> request)
     {
-        var response = await Mediator.Send(request);
+        var response = await _mediator.Send(request);
 
         return response
             ? NoContent()
