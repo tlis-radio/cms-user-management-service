@@ -118,6 +118,7 @@ public sealed class UserController : BaseController
     }
 
     [HttpDelete("{id:guid}")]
+    [Authorize(Policy.UserDelete)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
