@@ -1,6 +1,6 @@
 using System;
 
-namespace Tlis.Cms.UserManagement.Domain.Models.Base;
+namespace Tlis.Cms.UserManagement.Domain.Entities.Base;
 
 public abstract class BaseEntity
 {

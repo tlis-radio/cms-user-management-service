@@ -1,7 +1,7 @@
 using Riok.Mapperly.Abstractions;
 using Tlis.Cms.UserManagement.Application.Contracts.Api.Requests;
 using Tlis.Cms.UserManagement.Application.Contracts.Api.Responses;
-using Tlis.Cms.UserManagement.Domain.Models;
+using Tlis.Cms.UserManagement.Domain.Entities;
 
 namespace Tlis.Cms.UserManagement.Application.Mappers;
 

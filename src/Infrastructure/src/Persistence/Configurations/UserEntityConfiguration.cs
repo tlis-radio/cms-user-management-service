@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 using Microsoft.EntityFrameworkCore.ValueGeneration;
-using Tlis.Cms.UserManagement.Domain.Models;
+using Tlis.Cms.UserManagement.Domain.Entities;
 
 namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Configurations;
 

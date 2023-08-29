@@ -1,5 +1,5 @@
 using Microsoft.EntityFrameworkCore;
-using Tlis.Cms.UserManagement.Domain.Models;
+using Tlis.Cms.UserManagement.Domain.Entities;
 
 namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Interfaces;
 
