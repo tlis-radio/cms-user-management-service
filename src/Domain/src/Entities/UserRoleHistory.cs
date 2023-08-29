@@ -1,7 +1,7 @@
 using System;
-using Tlis.Cms.UserManagement.Domain.Models.Base;
+using Tlis.Cms.UserManagement.Domain.Entities.Base;
 
-namespace Tlis.Cms.UserManagement.Domain.Models;
+namespace Tlis.Cms.UserManagement.Domain.Entities;
 
 public class UserRoleHistory : BaseEntity
 {

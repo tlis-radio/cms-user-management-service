@@ -1,7 +1,7 @@
 using System;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Tlis.Cms.UserManagement.Domain.Models;
+using Tlis.Cms.UserManagement.Domain.Entities;
 using Tlis.Cms.UserManagement.Infrastructure.Persistence.Repositories.Interfaces;
 
 namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Repositories;

@@ -5,7 +5,7 @@ using MediatR;
 using Tlis.Cms.UserManagement.Application.Contracts.Api.Requests;
 using Tlis.Cms.UserManagement.Application.Contracts.Api.Responses;
 using Tlis.Cms.UserManagement.Application.Exceptions;
-using Tlis.Cms.UserManagement.Domain.Models;
+using Tlis.Cms.UserManagement.Domain.Entities;
 using Tlis.Cms.UserManagement.Infrastructure.Persistence.Interfaces;
 using Tlis.Cms.UserManagement.Infrastructure.Services.Interfaces;
 

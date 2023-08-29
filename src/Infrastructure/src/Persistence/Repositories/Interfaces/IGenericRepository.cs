@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Tlis.Cms.UserManagement.Domain.Models.Base;
+using Tlis.Cms.UserManagement.Domain.Entities.Base;
 
 namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Repositories.Interfaces;
 

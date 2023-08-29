@@ -4,7 +4,7 @@ using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Tlis.Cms.UserManagement.Domain.Models.Base;
+using Tlis.Cms.UserManagement.Domain.Entities.Base;
 using Tlis.Cms.UserManagement.Infrastructure.Persistence.Repositories.Interfaces;
 
 namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Repositories;
