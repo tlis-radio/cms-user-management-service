@@ -31,6 +31,16 @@ public sealed class UserController : BaseController
     public ValueTask<ActionResult<UserDetailsGetResponse>> GetUserDetails([FromRoute] Guid id)
         => HandleGet(new UserDetailsGetRequest { Id = id });
 
+    [HttpGet("pagination")]
+    [AllowAnonymous]
+    [Produces(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(PaginationResponse<UserPaginationGetResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    [SwaggerOperation("Paging user's")]
+    public ValueTask<ActionResult<PaginationResponse<UserPaginationGetResponse>>> Pagination([FromQuery] UserPaginationGetRequest request)
+        => HandleGet(request);
+
     [HttpPost]
     [Authorize(Policy.UserWrite)]
     [Produces(MediaTypeNames.Application.Json)]
