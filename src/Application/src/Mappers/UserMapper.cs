@@ -20,6 +20,9 @@ internal partial class UserMapper
     [MapperIgnoreSource(nameof(User.Id))]
     public partial UserDetailsGetResponse? ToDto(User? entity);
     
+    [MapperIgnoreSource(nameof(User.Id))]
+    public partial UserPaginationGetResponse ToPaginationDto(User entity);
+    
     [MapperIgnoreTarget(nameof(User.IsActive))]
     [MapperIgnoreTarget(nameof(User.ProfileImageUrl))]
     [MapperIgnoreTarget(nameof(User.ExternalId))]
@@ -55,4 +58,14 @@ internal partial class UserMapper
     [MapperIgnoreSource(nameof(Role.Id))]
     [MapperIgnoreSource(nameof(Role.UserRoleHistory))]
     private partial UserDetailsGetResponseRole MapToUserDetailsGetResponseRole(Role role);
+    
+    [MapperIgnoreSource(nameof(UserRoleHistory.UserForeignKey))]
+    [MapperIgnoreSource(nameof(UserRoleHistory.RoleForeignKey))]
+    [MapperIgnoreSource(nameof(UserRoleHistory.User))]
+    [MapperIgnoreSource(nameof(UserRoleHistory.Id))]
+    private partial UserPaginationGetResponseUserRoleHistory MapToUserPaginationGetResponseUserRoleHistory(UserRoleHistory entity);
+
+    [MapperIgnoreSource(nameof(Role.Id))]
+    [MapperIgnoreSource(nameof(Role.UserRoleHistory))]
+    private partial UserPaginationGetResponseRole MapToUserPaginationGetResponseRole(Role role);
 }
