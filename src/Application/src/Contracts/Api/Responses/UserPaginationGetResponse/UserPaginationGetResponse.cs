@@ -7,6 +7,9 @@ namespace Tlis.Cms.UserManagement.Application.Contracts.Api.Responses;
 public sealed class UserPaginationGetResponse
 {
     [Required]
+    public Guid Id { get; set; }
+
+    [Required]
     public string Firstname { get; set; } = null!;
 
     [Required]
@@ -30,8 +33,6 @@ public sealed class UserPaginationGetResponse
     public DateOnly? MembershipEndedDate { get; set; }
 
     public string? MembershipEndedReason { get; set; }
-
-    public string? ExternalId { get; set; }
 
     public string? Email { get; set; }
 
