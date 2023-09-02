@@ -9,6 +9,8 @@ namespace Tlis.Cms.UserManagement.Application.Contracts.Api.Requests;
 
 public sealed class ArchiveUserCreateRequest : IRequest<BaseCreateResponse>
 {
+    public Guid Id { get; set; }
+
     [SwaggerSchema(Description = "User's first name")]
     [Required]
     public required string Firstname { get; set; }

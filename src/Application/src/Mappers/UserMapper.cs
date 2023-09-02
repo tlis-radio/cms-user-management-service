@@ -20,13 +20,12 @@ internal partial class UserMapper
     [MapperIgnoreSource(nameof(User.Id))]
     public partial UserDetailsGetResponse? ToDto(User? entity);
     
-    [MapperIgnoreSource(nameof(User.Id))]
+    [MapperIgnoreSource(nameof(User.ExternalId))]
     public partial UserPaginationGetResponse ToPaginationDto(User entity);
     
     [MapperIgnoreTarget(nameof(User.IsActive))]
     [MapperIgnoreTarget(nameof(User.ProfileImageUrl))]
     [MapperIgnoreTarget(nameof(User.ExternalId))]
-    [MapperIgnoreTarget(nameof(User.Id))]
     [MapperIgnoreSource(nameof(ArchiveUserCreateRequest.Password))]
     public partial User ToEntity(ArchiveUserCreateRequest dto);
     
