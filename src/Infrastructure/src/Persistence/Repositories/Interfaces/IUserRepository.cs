@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Tlis.Cms.UserManagement.Domain.Entities;
 using Tlis.Cms.UserManagement.Infrastructure.Persistence.Dtos;
@@ -7,6 +8,8 @@ namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Repositories.Interf
 
 public interface IUserRepository : IGenericRepository<User>
 {
+    Task<IList<UserWithOnlyNicknameDto>> GetUsersWithOnlyNickName(IEnumerable<Guid> ids);
+
     Task<User?> GetUserWithRoleHistoriesById(Guid id, bool asTracking);
 
     Task<User?> GetUserDetailsById(Guid id, bool asTracking);

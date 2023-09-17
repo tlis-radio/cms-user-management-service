@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
@@ -12,6 +13,20 @@ internal sealed class UserRepository : GenericRepository<User>, IUserRepository
 {
     public UserRepository(UserManagementDbContext context) : base(context)
     {
+    }
+
+    public async Task<IList<UserWithOnlyNicknameDto>> GetUsersWithOnlyNickName(IEnumerable<Guid> ids)
+    {
+        var query = ConfigureTracking(dbSet.AsQueryable(), false);
+
+        return await query
+            .Where(u => ids.Contains(u.Id))
+            .Select(u => new UserWithOnlyNicknameDto
+                {
+                    Id = u.Id,
+                    Nickname = u.Nickname
+                })
+            .ToListAsync();
     }
 
     public Task<User?> GetUserWithRoleHistoriesById(Guid id, bool asTracking)

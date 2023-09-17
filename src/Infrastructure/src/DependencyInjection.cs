@@ -2,9 +2,12 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.ObjectPool;
+using Microsoft.Extensions.Options;
 using Tlis.Cms.UserManagement.Infrastructure.Configurations;
 using Tlis.Cms.UserManagement.Infrastructure.Persistence;
 using Tlis.Cms.UserManagement.Infrastructure.Persistence.Interfaces;
+using Tlis.Cms.UserManagement.Infrastructure.PooledObjects;
 using Tlis.Cms.UserManagement.Infrastructure.Services;
 using Tlis.Cms.UserManagement.Infrastructure.Services.Interfaces;
 
@@ -24,6 +27,18 @@ public static class DependencyInjection
             .Bind(configuration.GetSection("Auth0"))
             .ValidateDataAnnotations()
             .ValidateOnStart();
+        services
+            .AddOptions<RabbitMqConfiguration>()
+            .Bind(configuration.GetSection("RabbitMq"))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
+
+        services.AddSingleton<ObjectPoolProvider, DefaultObjectPoolProvider>();
+        services.AddSingleton(s =>
+        {
+            var provider = s.GetRequiredService<ObjectPoolProvider>();
+            return provider.Create(new RabbitMqModelPooledObject(s.GetRequiredService<IOptions<RabbitMqConfiguration>>()));
+        });
 
         services.AddDbContext<IUserManagementDbContext, UserManagementDbContext>(options =>
             {
