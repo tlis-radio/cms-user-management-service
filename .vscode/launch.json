@@ -9,7 +9,7 @@
             "type": "coreclr",
             "request": "launch",
             "preLaunchTask": "build",
-            "program": "${workspaceFolder}/src/Api/src/bin/Debug/net7.0/Tlis.Cms.Users.Management.Api.dll",
+            "program": "${workspaceFolder}/src/Api/src/bin/Debug/net7.0/Tlis.Cms.UserManagement.Api.dll",
             "args": [],
             "cwd": "${workspaceFolder}/src/Api/src",
             "stopAtEntry": false,

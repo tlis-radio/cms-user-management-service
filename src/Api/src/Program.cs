@@ -1,4 +1,5 @@
 using Tlis.Cms.UserManagement.Api.Extensions;
+using Tlis.Cms.UserManagement.Api.RpcConsumers;
 using Tlis.Cms.UserManagement.Application;
 using Tlis.Cms.UserManagement.Infrastructure;
 
@@ -12,6 +13,8 @@ namespace Tlis.Cms.UserManagement.Api
 
             builder.Services.AddMemoryCache();
             builder.Services.AddControllers();
+
+            builder.Services.AddHostedService<GetUsersNickNameRequestConsumer>();
 
             builder.Services.ConfigureProblemDetails();
             builder.Services.ConfigureSwagger();
