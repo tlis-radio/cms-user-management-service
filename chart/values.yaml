@@ -15,4 +15,8 @@ config:
     domain: ""
     clientId: ""
     clientSecret: ""
+  rabbitmq:
+    hostName: ""
+    userName: ""
+    password: ""
 
