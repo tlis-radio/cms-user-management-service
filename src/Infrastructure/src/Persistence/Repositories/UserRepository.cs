@@ -17,7 +17,7 @@ internal sealed class UserRepository : GenericRepository<User>, IUserRepository
 
     public async Task<IList<UserWithOnlyNicknameDto>> GetUsersWithOnlyNickName(IEnumerable<Guid> ids)
     {
-        var query = ConfigureTracking(dbSet.AsQueryable(), false);
+        var query = ConfigureTracking(DbSet.AsQueryable(), false);
 
         return await query
             .Where(u => ids.Contains(u.Id))
@@ -31,7 +31,7 @@ internal sealed class UserRepository : GenericRepository<User>, IUserRepository
 
     public Task<User?> GetUserWithRoleHistoriesById(Guid id, bool asTracking)
     {
-        var query = ConfigureTracking(dbSet.AsQueryable(), asTracking);
+        var query = ConfigureTracking(DbSet.AsQueryable(), asTracking);
 
         return query
             .Include(u => u.RoleHistory)
@@ -40,7 +40,7 @@ internal sealed class UserRepository : GenericRepository<User>, IUserRepository
 
     public Task<User?> GetUserDetailsById(Guid id, bool asTracking)
     {
-        var query = ConfigureTracking(dbSet.AsQueryable(), asTracking);
+        var query = ConfigureTracking(DbSet.AsQueryable(), asTracking);
 
         return query
             .Include(u => u.RoleHistory)
@@ -50,10 +50,10 @@ internal sealed class UserRepository : GenericRepository<User>, IUserRepository
     
     public async Task< PaginationDto<User>> PaginationAsync(int limit, int pageNumber, bool isActive)
     {
-        var queryGetTotalCount = await ConfigureTracking(dbSet.AsQueryable(), false)
+        var queryGetTotalCount = await ConfigureTracking(DbSet.AsQueryable(), false)
             .Where(x => x.IsActive == isActive).CountAsync();
         
-        var pageQuery = ConfigureTracking(dbSet.AsQueryable(), false)
+        var pageQuery = ConfigureTracking(DbSet.AsQueryable(), false)
             .Where(x => x.IsActive == isActive);
 
         var page = await pageQuery
