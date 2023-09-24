@@ -12,65 +12,65 @@ namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Repositories;
 internal abstract class GenericRepository<TEntity> : IGenericRepository<TEntity>
     where TEntity : BaseEntity
 {
-    protected readonly DbSet<TEntity> dbSet;
+    protected readonly DbSet<TEntity> DbSet;
 
-    protected readonly UserManagementDbContext context;
+    protected readonly UserManagementDbContext Context;
 
     public GenericRepository(UserManagementDbContext context)
     {
-        dbSet = context.Set<TEntity>();
-        this.context = context;
+        DbSet = context.Set<TEntity>();
+        Context = context;
     }
 
     public Task<TEntity?> GetByIdAsync(Guid id, bool asTracking)
     {
-        var query = ConfigureTracking(dbSet.AsQueryable(), asTracking);
+        var query = ConfigureTracking(DbSet.AsQueryable(), asTracking);
 
         return query.FirstOrDefaultAsync(x => x.Id == id);
     }
 
     public Task<List<TEntity>> GetByIdsAsync(IEnumerable<Guid> ids, bool asTracking)
     {
-        var query = ConfigureTracking(dbSet.AsQueryable(), asTracking);
+        var query = ConfigureTracking(DbSet.AsQueryable(), asTracking);
 
         return query.Where(x => ids.Contains(x.Id)).ToListAsync();
     }
 
     public async Task<List<TEntity>> GetAsync(Expression<Func<TEntity, bool>> predicate, bool asTracking)
     {
-        var query = ConfigureTracking(dbSet.AsQueryable(), asTracking);
+        var query = ConfigureTracking(DbSet.AsQueryable(), asTracking);
 
         return await query.Where(predicate).ToListAsync();
     }
 
     public async Task InsertAsync(TEntity entity)
     {
-        await dbSet.AddAsync(entity);
+        await DbSet.AddAsync(entity);
     }
 
     public async Task InsertRangeAsync(IEnumerable<TEntity> entities)
     {
-        await dbSet.AddRangeAsync(entities);
+        await DbSet.AddRangeAsync(entities);
     }
 
     public void Update(TEntity entity)
     {
-        dbSet.Update(entity);
+        DbSet.Update(entity);
     }
 
     public async ValueTask<bool> DeleteByIdAsync(Guid id)
     {
-        var toDelete = await dbSet.FindAsync(id);
+        var toDelete = await DbSet.FindAsync(id);
         if (toDelete is null)
             return false;
 
-        dbSet.Remove(toDelete);
+        DbSet.Remove(toDelete);
         return true;
     }
 
     public bool Delete(TEntity toDelete)
     {
-        dbSet.Remove(toDelete);
+        DbSet.Remove(toDelete);
         return true;
     }
 
@@ -79,7 +79,7 @@ internal abstract class GenericRepository<TEntity> : IGenericRepository<TEntity>
         if (toDelete is null)
             return true;
 
-        dbSet.RemoveRange(toDelete);
+        DbSet.RemoveRange(toDelete);
         return true;
     }
 

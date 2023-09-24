@@ -14,5 +14,6 @@ public static class DependencyInjection
         });
 
         services.AddTransient<UserMapper>();
+        services.AddTransient<RoleMapper>();
     }
 }
