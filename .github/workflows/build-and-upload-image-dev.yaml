@@ -80,8 +80,8 @@ jobs:
     - name: 'Get K8s context'
       uses: azure/aks-set-context@v3
       with:
-        resource-group: TlisKubernetes
-        cluster-name: tlis
+        resource-group: K8s
+        cluster-name: tlis-k8s
         admin: 'false'
         use-kubelogin: 'true'
     # login to Azure Container Registry
@@ -92,10 +92,10 @@ jobs:
     - name: 'Upgrade chart'
       run: |
         helm upgrade cms-user-management oci://${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/helm/cms-user-management \
-        --kube-context tlis \
+        --kube-context tlis-k8s \
         --version 1.1.0 \
         --install \
-        --create-namespace --namespace cms-development \
+        --create-namespace --namespace cms-staging \
         --set config.connectionStrings.postgres="${{ secrets.POSTGRES_CONNECTION_STRING }}" \
         --set config.connectionStrings.storageAccount="${{ secrets.STORAGE_ACCOUNT_CONNECTION_STRING }}" \
         --set config.jwt.audience="${{ secrets.JWT_AUDIENCE }}" \
