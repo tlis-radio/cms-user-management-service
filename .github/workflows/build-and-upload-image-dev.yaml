@@ -106,4 +106,5 @@ jobs:
         --set config.auth0.clientSecret="${{ secrets.AUTH0_CLIENT_SECRET }}" \
         --set config.rabbitmq.hostName="${{ secrets.RABBITMQ_HOSTNAME }}" \
         --set config.rabbitmq.userName="${{ secrets.RABBITMQ_USERNAME }}" \
-        --set config.rabbitmq.password="${{ secrets.RABBITMQ_PASSWORD }}"
+        --set config.rabbitmq.password="${{ secrets.RABBITMQ_PASSWORD }}" \
+        --set config.rabbitmq.virtualHost="${{ vars.RABBITMQ_VIRTUAL_HOST }}"
