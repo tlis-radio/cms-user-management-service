@@ -68,6 +68,9 @@
             },
             "password": {
               "type": "string"
+            },
+            "virtualHost": {
+              "type": "string"
             }
           }
         }

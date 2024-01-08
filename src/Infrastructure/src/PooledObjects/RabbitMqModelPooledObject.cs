@@ -15,6 +15,7 @@ internal class RabbitMqModelPooledObject : IPooledObjectPolicy<IModel>
             HostName = configuration.Value.HostName,
             UserName = configuration.Value.UserName,
             Password = configuration.Value.Password,
+            VirtualHost = configuration.Value.VirtualHost,
             DispatchConsumersAsync = true
         };
         Connection = factory.CreateConnection();

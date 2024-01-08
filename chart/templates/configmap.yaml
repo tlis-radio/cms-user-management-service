@@ -33,6 +33,7 @@ data:
         "RabbitMq": {
             "HostName": {{ .Values.config.rabbitmq.hostName | quote }},
             "UserName": {{ .Values.config.rabbitmq.userName | quote }},
-            "Password": {{ .Values.config.rabbitmq.password | quote }}
+            "Password": {{ .Values.config.rabbitmq.password | quote }},
+            "VirtualHost": {{ .Values.config.rabbitmq.virtualHost | quote }}
         }
     }

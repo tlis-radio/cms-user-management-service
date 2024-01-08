@@ -12,4 +12,7 @@ internal sealed class RabbitMqConfiguration
 
     [Required(AllowEmptyStrings = false)]
     public string Password { get; set; } = null!;
+
+    [Required(AllowEmptyStrings = false)]
+    public string VirtualHost { get; set; } = null!;
 }

@@ -19,4 +19,5 @@ config:
     hostName: ""
     userName: ""
     password: ""
+    virtualHost: ""
 
