@@ -1,5 +1,17 @@
 version: '3.8'
 services:
+  rabbitmq:
+    image: rabbitmq:3.8-management
+    hostname: rabbitmq
+    volumes:
+        - cms_usermanagement_rabbitmq_data:/var/lib/rabbitmq
+    ports:
+        - "15672:15672"
+        - "5672:5672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=test
+      - RABBITMQ_DEFAULT_PASS=test
+
   postgres:
     image: postgres:15
     restart: always
@@ -32,6 +44,8 @@ services:
       az storage container create -n user-profile-images --connection-string "DefaultEndpointsProtocol=http;AccountName=devstoreaccount1;AccountKey=Eby8vdM02xNOcqFlqUwJPLlmEtlCDXJ1OUzFT50uSRZ6IFsuFq2UVErCz4I6tq/K1SZFPTOtr/KBHBeksoGMGw==;BlobEndpoint=http://azure-blob-storage:10000/devstoreaccount1;QueueEndpoint=http://azure-blob-storage:10001/devstoreaccount1;"
 
 volumes:
+  cms_usermanagement_rabbitmq_data:
+    driver: local
   cms_usermanagement_postgres_data:
     driver: local
   cms_usermanagement_azure_blob_storage_data:
