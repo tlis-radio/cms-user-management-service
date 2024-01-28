@@ -29,6 +29,15 @@ spec:
           env:
             - name: ASPNETCORE_URLS
               value: http://+:80
+      initContainers:
+        - name: ef-migration
+          image: tliscr.azurecr.io/cms-user-management-cli:{{ .Chart.AppVersion }}
+          args: ['migration']
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+          - mountPath: /app/appsettings.json
+            name: config
+            subPath: appsettings.json
       {{ if .Values.spec.imagePullSecrets }}
       imagePullSecrets:
         - name: {{ .Values.spec.imagePullSecrets | quote }}

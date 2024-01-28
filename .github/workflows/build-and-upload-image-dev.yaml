@@ -24,8 +24,10 @@ jobs:
         password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
     # build and push the image
     - run: |
-        docker build . --file Dockerfile --tag ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/cms-user-management:${{ github.sha }}
+        docker build . --file api.Dockerfile --tag ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/cms-user-management:${{ github.sha }}
         docker push ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/cms-user-management:${{ github.sha }}
+        docker build . --file cli.Dockerfile --tag ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/cms-user-management-cli:${{ github.sha }}
+        docker push ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/cms-user-management-cli:${{ github.sha }}
   build-helm-chart-and-push-to-acr:
     name: 'Build helm chart and push to ACR'
     environment: 'development'
