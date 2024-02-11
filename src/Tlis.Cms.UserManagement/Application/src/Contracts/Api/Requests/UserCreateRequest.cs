@@ -30,7 +30,7 @@ public sealed class UserCreateRequest : IRequest<BaseCreateResponse>
 
     [SwaggerSchema(Description = "User's date on which the user became a member of TLIS.")]
     [Required]
-    public DateOnly MemberSinceDate { get; set; }
+    public DateTime MemberSinceDate { get; set; }
 
     [SwaggerSchema(Description = "User's email address")]
     public string? Email { get; set; }

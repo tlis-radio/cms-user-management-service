@@ -15,13 +15,14 @@ internal sealed class UserMembershipUpdateRequestHandler(IUnitOfWork unitOfWork)
     public async Task<bool> Handle(UserMembershipUpdateRequest request, CancellationToken cancellationToken)
     {
         var user = await unitOfWork.UserRepository.GetByIdAsync(request.UserId, asTracking: true);
+        var membership = await unitOfWork.MembershipRepository.GetByIdAsync(request.MembershipId, asTracking: false);
 
-        if (user is null)
+        if (user is null || membership is null)
         {
             return false;
         }
 
-        user.IsActive = request.Status switch
+        user.IsActive = membership.Status switch
         {
             MembershipStatus.Active => true,
             MembershipStatus.Postponed => false,
@@ -34,7 +35,7 @@ internal sealed class UserMembershipUpdateRequestHandler(IUnitOfWork unitOfWork)
             UserId = request.UserId,
             ChangeDate = request.ChangeDate,
             Description = request.Description,
-            Status = request.Status
+            MembershipId = membership.Id
         });
         await unitOfWork.SaveChangesAsync();
 

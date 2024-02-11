@@ -22,9 +22,6 @@ data:
             "Audience": {{ .Values.config.jwt.audience | quote }},
             "Authority": {{ .Values.config.jwt.authority | quote }}
         },
-        "ServiceUrls": {
-            "StorageAccount": {{ .Values.config.serviceUrls.storageAccount | quote }}
-        },
         "Auth0": {
             "Domain": {{ .Values.config.auth0.domain | quote }},
             "ClientId": {{ .Values.config.auth0.clientId | quote }},

@@ -9,8 +9,6 @@ config:
   jwt:
     audience: ""
     authority: ""
-  serviceUrls:
-    storageAccount: ""
   auth0:
     domain: ""
     clientId: ""

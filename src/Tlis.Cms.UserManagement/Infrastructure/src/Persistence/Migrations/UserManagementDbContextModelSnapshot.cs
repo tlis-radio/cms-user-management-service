@@ -18,10 +18,48 @@ namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Migrations
 #pragma warning disable 612, 618
             modelBuilder
                 .HasDefaultSchema("cms_user_management")
-                .HasAnnotation("ProductVersion", "7.0.10")
+                .HasAnnotation("ProductVersion", "8.0.1")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
+
+            modelBuilder.Entity("Tlis.Cms.UserManagement.Domain.Entities.Membership", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uuid")
+                        .HasColumnName("id");
+
+                    b.Property<string>("Status")
+                        .IsRequired()
+                        .HasColumnType("text")
+                        .HasColumnName("status");
+
+                    b.HasKey("Id")
+                        .HasName("pk_membership");
+
+                    b.HasIndex("Id")
+                        .HasDatabaseName("ix_membership_id");
+
+                    b.ToTable("membership", "cms_user_management");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = new Guid("a7c0bea2-2812-40b6-9836-d4b5accae95a"),
+                            Status = "Active"
+                        },
+                        new
+                        {
+                            Id = new Guid("80126b05-9dab-4709-aa6a-39baa5bafe79"),
+                            Status = "Archive"
+                        },
+                        new
+                        {
+                            Id = new Guid("cfaeecff-d26b-44f2-bfa1-c80ab79983a9"),
+                            Status = "Postponed"
+                        });
+                });
 
             modelBuilder.Entity("Tlis.Cms.UserManagement.Domain.Entities.Role", b =>
                 {
@@ -46,17 +84,17 @@ namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("ed9359a3-0106-4c61-b2fb-5cb32ed4a788"),
+                            Id = new Guid("cbec6f46-a2e8-4fb3-a126-fe4e51e5ead2"),
                             Name = "system-admin"
                         },
                         new
                         {
-                            Id = new Guid("b15deaa2-3de8-42b8-813a-1df2ea764f66"),
+                            Id = new Guid("a9a9040c-fbbd-4aa6-b0dc-56de7265ee7f"),
                             Name = "technician"
                         },
                         new
                         {
-                            Id = new Guid("1e1a6556-7e50-4e0c-b4c2-13bcea319efb"),
+                            Id = new Guid("ed7cafb5-f2bf-4fbe-972c-18fa4f056b69"),
                             Name = "moderator"
                         });
                 });
@@ -104,9 +142,9 @@ namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("boolean")
                         .HasColumnName("prefer_nickname_over_name");
 
-                    b.Property<string>("ProfileImageUrl")
-                        .HasColumnType("text")
-                        .HasColumnName("profile_image_url");
+                    b.Property<Guid?>("ProfileImageId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("profile_image_id");
 
                     b.HasKey("Id")
                         .HasName("pk_user");
@@ -136,10 +174,9 @@ namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Migrations
                         .HasColumnType("text")
                         .HasColumnName("description");
 
-                    b.Property<string>("Status")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("status");
+                    b.Property<Guid>("MembershipId")
+                        .HasColumnType("uuid")
+                        .HasColumnName("membership_id");
 
                     b.Property<Guid>("UserId")
                         .HasColumnType("uuid")
@@ -150,6 +187,9 @@ namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Migrations
 
                     b.HasIndex("Id")
                         .HasDatabaseName("ix_user_membership_history_id");
+
+                    b.HasIndex("MembershipId")
+                        .HasDatabaseName("ix_user_membership_history_membership_id");
 
                     b.HasIndex("UserId")
                         .HasDatabaseName("ix_user_membership_history_user_id");
@@ -201,12 +241,21 @@ namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Migrations
 
             modelBuilder.Entity("Tlis.Cms.UserManagement.Domain.Entities.UserMembershipHistory", b =>
                 {
+                    b.HasOne("Tlis.Cms.UserManagement.Domain.Entities.Membership", "Membership")
+                        .WithMany()
+                        .HasForeignKey("MembershipId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired()
+                        .HasConstraintName("fk_user_membership_history_membership_membership_id");
+
                     b.HasOne("Tlis.Cms.UserManagement.Domain.Entities.User", null)
                         .WithMany("MembershipHistory")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired()
                         .HasConstraintName("fk_user_membership_history_user_user_id");
+
+                    b.Navigation("Membership");
                 });
 
             modelBuilder.Entity("Tlis.Cms.UserManagement.Domain.Entities.UserRoleHistory", b =>

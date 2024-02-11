@@ -8,7 +8,6 @@ using Tlis.Cms.UserManagement.Application.Exceptions;
 using Tlis.Cms.UserManagement.Infrastructure.Persistence.Interfaces;
 using Tlis.Cms.UserManagement.Infrastructure.Services.Interfaces;
 using Tlis.Cms.UserManagement.Application.Mappers;
-using System;
 using Tlis.Cms.UserManagement.Domain.Constants;
 
 namespace Tlis.Cms.UserManagement.Application.RequestHandlers;
@@ -24,12 +23,18 @@ internal sealed class UserCreateRequestHandler(
         userToCreate.IsActive = true;
 
         var role = await roleService.GetByIdAsync(request.RoleId) ?? throw new UserRoleNotFoundException(request.RoleId);
+        var membershipId = await unitOfWork.MembershipRepository.GetIdByStatus(MembershipStatus.Active);
+
+        if (membershipId is null)
+        {
+            throw new MembershipNotFoundException(MembershipStatus.Active);
+        }
 
         userToCreate.MembershipHistory = [
             new UserMembershipHistory
             {
-                ChangeDate = DateTime.UtcNow,
-                Status = MembershipStatus.Active
+                ChangeDate = request.MemberSinceDate,
+                MembershipId = membershipId.Value
             }
         ];
 

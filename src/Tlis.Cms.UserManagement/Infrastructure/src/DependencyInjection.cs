@@ -18,11 +18,6 @@ public static class DependencyInjection
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
         services
-            .AddOptions<ServiceUrlsConfiguration>()
-            .Bind(configuration.GetSection("ServiceUrls"))
-            .ValidateDataAnnotations()
-            .ValidateOnStart();
-        services
             .AddOptions<Auth0Configuration>()
             .Bind(configuration.GetSection("Auth0"))
             .ValidateDataAnnotations()
@@ -56,8 +51,6 @@ public static class DependencyInjection
 
         services.AddScoped<ICacheService, CacheService>();
         services.AddScoped<IRoleService, RoleService>();
-
-        services.AddSingleton<IStorageService, StorageService>();
 
         services.AddHttpClient<ITokenProviderService, TokenProviderService>();
         services.AddHttpClient<IAuthProviderManagementService, AuthProviderManagementService>();

@@ -17,6 +17,8 @@ public class UnitOfWork : IDisposable, IUnitOfWork
 
     public IRoleRepository RoleRepository => _lazyRoleRepository.Value;
 
+    public IMembershipRepository MembershipRepository => _lazyMembershipRepository.Value;
+
     public IUserRoleHistoryRepository UserRoleHistoryRepository => _lazyUserRoleHistoryRepository.Value;
 
     public IUserMembershipHistoryRepository UserMembershipHistoryRepository => _lazyUserMembershipHistoryRepository.Value;
@@ -31,6 +33,8 @@ public class UnitOfWork : IDisposable, IUnitOfWork
 
     private readonly Lazy<IRoleRepository> _lazyRoleRepository;
 
+    private readonly Lazy<IMembershipRepository> _lazyMembershipRepository;
+
     private readonly Lazy<IUserRoleHistoryRepository> _lazyUserRoleHistoryRepository;
 
     private readonly Lazy<IUserMembershipHistoryRepository> _lazyUserMembershipHistoryRepository;
@@ -42,6 +46,7 @@ public class UnitOfWork : IDisposable, IUnitOfWork
         _lazyRoleRepository = new(() => new RoleRepository(_dbContext));
         _lazyUserRoleHistoryRepository = new(() => new UserRoleHistoryRepository(_dbContext));
         _lazyUserMembershipHistoryRepository = new(() => new UserMembershipHistoryRepository(_dbContext));
+        _lazyMembershipRepository = new(() => new MembershipRepository(_dbContext));
         _logger = logger;
     }
 

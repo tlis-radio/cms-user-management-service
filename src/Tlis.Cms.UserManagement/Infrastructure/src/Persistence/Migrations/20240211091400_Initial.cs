@@ -17,6 +17,19 @@ namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Migrations
                 name: "cms_user_management");
 
             migrationBuilder.CreateTable(
+                name: "membership",
+                schema: "cms_user_management",
+                columns: table => new
+                {
+                    id = table.Column<Guid>(type: "uuid", nullable: false),
+                    status = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("pk_membership", x => x.id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "role",
                 schema: "cms_user_management",
                 columns: table => new
@@ -39,7 +52,7 @@ namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Migrations
                     lastname = table.Column<string>(type: "text", nullable: false),
                     nickname = table.Column<string>(type: "text", nullable: false),
                     abouth = table.Column<string>(type: "text", nullable: false),
-                    profile_image_url = table.Column<string>(type: "text", nullable: true),
+                    profile_image_id = table.Column<Guid>(type: "uuid", nullable: true),
                     prefer_nickname_over_name = table.Column<bool>(type: "boolean", nullable: false),
                     is_active = table.Column<bool>(type: "boolean", nullable: false),
                     external_id = table.Column<string>(type: "text", nullable: true),
@@ -57,13 +70,19 @@ namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Migrations
                 {
                     id = table.Column<Guid>(type: "uuid", nullable: false),
                     user_id = table.Column<Guid>(type: "uuid", nullable: false),
-                    status = table.Column<string>(type: "text", nullable: false),
+                    membership_id = table.Column<Guid>(type: "uuid", nullable: false),
                     change_date = table.Column<DateTime>(type: "timestamp with time zone", nullable: false),
                     description = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("pk_user_membership_history", x => x.id);
+                    table.ForeignKey(
+                        name: "fk_user_membership_history_membership_membership_id",
+                        column: x => x.membership_id,
+                        principalSchema: "cms_user_management",
+                        principalTable: "membership",
+                        principalColumn: "id");
                     table.ForeignKey(
                         name: "fk_user_membership_history_user_user_id",
                         column: x => x.user_id,
@@ -103,14 +122,31 @@ namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Migrations
 
             migrationBuilder.InsertData(
                 schema: "cms_user_management",
+                table: "membership",
+                columns: new[] { "id", "status" },
+                values: new object[,]
+                {
+                    { new Guid("80126b05-9dab-4709-aa6a-39baa5bafe79"), "Archive" },
+                    { new Guid("a7c0bea2-2812-40b6-9836-d4b5accae95a"), "Active" },
+                    { new Guid("cfaeecff-d26b-44f2-bfa1-c80ab79983a9"), "Postponed" }
+                });
+
+            migrationBuilder.InsertData(
+                schema: "cms_user_management",
                 table: "role",
                 columns: new[] { "id", "name" },
                 values: new object[,]
                 {
-                    { new Guid("1e1a6556-7e50-4e0c-b4c2-13bcea319efb"), "moderator" },
-                    { new Guid("b15deaa2-3de8-42b8-813a-1df2ea764f66"), "technician" },
-                    { new Guid("ed9359a3-0106-4c61-b2fb-5cb32ed4a788"), "system-admin" }
+                    { new Guid("a9a9040c-fbbd-4aa6-b0dc-56de7265ee7f"), "technician" },
+                    { new Guid("cbec6f46-a2e8-4fb3-a126-fe4e51e5ead2"), "system-admin" },
+                    { new Guid("ed7cafb5-f2bf-4fbe-972c-18fa4f056b69"), "moderator" }
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "ix_membership_id",
+                schema: "cms_user_management",
+                table: "membership",
+                column: "id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_role_id",
@@ -136,6 +172,12 @@ namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Migrations
                 schema: "cms_user_management",
                 table: "user_membership_history",
                 column: "id");
+
+            migrationBuilder.CreateIndex(
+                name: "ix_user_membership_history_membership_id",
+                schema: "cms_user_management",
+                table: "user_membership_history",
+                column: "membership_id");
 
             migrationBuilder.CreateIndex(
                 name: "ix_user_membership_history_user_id",
@@ -171,6 +213,10 @@ namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Migrations
 
             migrationBuilder.DropTable(
                 name: "user_role_history",
+                schema: "cms_user_management");
+
+            migrationBuilder.DropTable(
+                name: "membership",
                 schema: "cms_user_management");
 
             migrationBuilder.DropTable(

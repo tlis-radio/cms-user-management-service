@@ -35,14 +35,6 @@
             }
           }
         },
-        "serviceUrls": {
-          "type": "object",
-          "properties": {
-            "storageAccount": {
-              "type": "string"
-            }
-          }
-        },
         "auth0": {
           "type": "object",
           "properties": {

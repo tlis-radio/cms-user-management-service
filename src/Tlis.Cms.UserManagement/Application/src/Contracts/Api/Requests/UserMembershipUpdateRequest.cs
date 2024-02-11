@@ -2,7 +2,6 @@ using System;
 using System.ComponentModel.DataAnnotations;
 using System.Text.Json.Serialization;
 using MediatR;
-using Tlis.Cms.UserManagement.Domain.Constants;
 
 namespace Tlis.Cms.UserManagement.Application.Contracts.Api.Requests;
 
@@ -12,7 +11,7 @@ public sealed class UserMembershipUpdateRequest : IRequest<bool>
     public Guid UserId { get; set; }
 
     [Required]
-    public MembershipStatus Status { get; set; }
+    public Guid MembershipId { get; set; }
 
     [Required]
     public DateTime ChangeDate { get; set; }

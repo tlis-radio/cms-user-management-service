@@ -43,6 +43,7 @@ internal sealed class UserRepository(UserManagementDbContext context)
             .Include(u => u.RoleHistory)
                 !.ThenInclude(rh => rh.Role)
             .Include(u => u.MembershipHistory)
+                !.ThenInclude(mh => mh.Membership)
             .FirstOrDefaultAsync(u => u.Id == id);
     }
     
@@ -55,8 +56,6 @@ internal sealed class UserRepository(UserManagementDbContext context)
             .Where(x => x.IsActive == isActive);
 
         var page = await pageQuery
-            .Include(u => u.RoleHistory)
-            !.ThenInclude(rh => rh.Role)
             .OrderBy(u => u.Nickname)
             .Skip(limit * (pageNumber - 1))
             .Take(limit)

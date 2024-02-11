@@ -9,6 +9,7 @@ using Tlis.Cms.UserManagement.Infrastructure.Persistence.Interfaces;
 using Tlis.Cms.UserManagement.Infrastructure.Services.Interfaces;
 using Tlis.Cms.UserManagement.Application.Mappers;
 using System.Linq;
+using Tlis.Cms.UserManagement.Domain.Constants;
 
 namespace Tlis.Cms.UserManagement.Application.RequestHandlers;
 
@@ -20,10 +21,16 @@ internal sealed class ArchiveUserCreateRequestHandler(
     public async Task<BaseCreateResponse> Handle(ArchiveUserCreateRequest request, CancellationToken cancellationToken)
     {
         var userToCreate = UserMapper.ToEntity(request);
+        var membershipId = await unitOfWork.MembershipRepository.GetIdByStatus(MembershipStatus.Archive);
+
+        if (membershipId is null)
+        {
+            throw new MembershipNotFoundException(MembershipStatus.Archive);
+        }
 
         userToCreate.MembershipHistory = request.MembershipHistory.Select(x => new UserMembershipHistory
         {
-            Status = x.Status,
+            MembershipId = membershipId.Value,
             ChangeDate = x.ChangeDate,
             Description = x.Description
         }).ToList();

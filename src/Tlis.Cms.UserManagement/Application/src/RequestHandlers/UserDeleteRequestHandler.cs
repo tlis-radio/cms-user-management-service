@@ -9,7 +9,6 @@ namespace Tlis.Cms.UserManagement.Application.RequestHandlers;
 
 internal sealed class UserDeleteRequestHandler(
     IAuthProviderManagementService authProviderManagementService,
-    IStorageService storageService,
     IUnitOfWork unitOfWork)
     : IRequestHandler<UserDeleteRequest, bool>
 {
@@ -25,11 +24,6 @@ internal sealed class UserDeleteRequestHandler(
 
         await unitOfWork.UserRepository.DeleteByIdAsync(request.Id);
         await unitOfWork.SaveChangesAsync();
-
-        if (string.IsNullOrEmpty(user.ProfileImageUrl) is false)
-        {
-            await storageService.DeleteUserProfileImage(user.ProfileImageUrl);
-        }
 
         return true;
     }
