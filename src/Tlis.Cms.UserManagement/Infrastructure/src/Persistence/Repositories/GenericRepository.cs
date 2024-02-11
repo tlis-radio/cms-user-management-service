@@ -16,6 +16,17 @@ internal abstract class GenericRepository<TEntity>(UserManagementDbContext conte
 
     protected readonly UserManagementDbContext Context = context;
 
+    public async Task<Guid?> GetIdAsync(Expression<Func<TEntity, bool>> predicate)
+    {
+        var query = ConfigureTracking(DbSet.AsQueryable(), false);
+
+        var filter = query.Where(predicate).Select(x => x.Id);
+
+        var result = await filter.FirstOrDefaultAsync();
+
+        return result == default ? null : result;
+    }
+
     public Task<TEntity?> GetByIdAsync(Guid id, bool asTracking)
     {
         var query = ConfigureTracking(DbSet.AsQueryable(), asTracking);

@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Diagnostics;
 using Microsoft.AspNetCore.WebUtilities;
+using Tlis.Cms.UserManagement.Application.Exceptions;
 using Tlis.Cms.UserManagement.Infrastructure.Exceptions;
 
 namespace Tlis.Cms.UserManagement.Api.Extensions;
@@ -19,6 +20,8 @@ public static class ProblemDetailsSetup
                 {
                     AuthProviderUserAlreadyExistsException _ => StatusCodes.Status409Conflict,
                     AuthProviderBadRequestException _ => StatusCodes.Status400BadRequest,
+                    MembershipNotFoundException _ => StatusCodes.Status400BadRequest,
+                    UserRoleNotFoundException _ => StatusCodes.Status400BadRequest,
                     _ => context.ProblemDetails.Status
                 };
                 

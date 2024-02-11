@@ -10,6 +10,8 @@ public interface IUnitOfWork
 
     public IRoleRepository RoleRepository { get; }
 
+    public IMembershipRepository MembershipRepository { get; }
+
     public IUserRoleHistoryRepository UserRoleHistoryRepository { get; }
 
     public IUserMembershipHistoryRepository UserMembershipHistoryRepository { get; }

@@ -18,20 +18,18 @@ internal static partial class UserMapper
     }
 
     [MapperIgnoreSource(nameof(User.Id))]
-    [MapperIgnoreTarget(nameof(UserDetailsGetResponse.MembershipEndedDate))]
-    [MapperIgnoreTarget(nameof(UserDetailsGetResponse.MembershipEndedReason))]
-    [MapperIgnoreTarget(nameof(UserDetailsGetResponse.MemberSinceDate))]
     public static partial UserDetailsGetResponse? ToDto(User? entity);
     
     [MapperIgnoreSource(nameof(User.ExternalId))]
+    [MapperIgnoreSource(nameof(User.RoleHistory))]
     [MapperIgnoreSource(nameof(User.MembershipHistory))]
-    [MapperIgnoreTarget(nameof(UserPaginationGetResponse.MembershipEndedDate))]
-    [MapperIgnoreTarget(nameof(UserPaginationGetResponse.MembershipEndedReason))]
-    [MapperIgnoreTarget(nameof(UserPaginationGetResponse.MemberSinceDate))]
+    [MapperIgnoreSource(nameof(User.Abouth))]
+    [MapperIgnoreSource(nameof(User.ProfileImageId))]
+    [MapperIgnoreSource(nameof(User.PreferNicknameOverName))]
     public static partial UserPaginationGetResponse ToPaginationDto(User entity);
     
     [MapperIgnoreTarget(nameof(User.IsActive))]
-    [MapperIgnoreTarget(nameof(User.ProfileImageUrl))]
+    [MapperIgnoreTarget(nameof(User.ProfileImageId))]
     [MapperIgnoreTarget(nameof(User.ExternalId))]
     [MapperIgnoreTarget(nameof(User.MembershipHistory))]
     [MapperIgnoreSource(nameof(ArchiveUserCreateRequest.Password))]
@@ -39,7 +37,7 @@ internal static partial class UserMapper
     public static partial User ToEntity(ArchiveUserCreateRequest dto);
     
     [MapperIgnoreTarget(nameof(User.IsActive))]
-    [MapperIgnoreTarget(nameof(User.ProfileImageUrl))]
+    [MapperIgnoreTarget(nameof(User.ProfileImageId))]
     [MapperIgnoreTarget(nameof(User.ExternalId))]
     [MapperIgnoreTarget(nameof(User.Id))]
     [MapperIgnoreTarget(nameof(User.RoleHistory))]
@@ -66,16 +64,8 @@ internal static partial class UserMapper
     [MapperIgnoreSource(nameof(Role.Id))]
     private static partial UserDetailsGetResponseRole MapToUserDetailsGetResponseRole(Role role);
     
-    [MapperIgnoreSource(nameof(UserRoleHistory.UserId))]
-    [MapperIgnoreSource(nameof(UserRoleHistory.RoleId))]
-    [MapperIgnoreSource(nameof(UserRoleHistory.User))]
-    [MapperIgnoreSource(nameof(UserRoleHistory.Id))]
-    private static partial UserPaginationGetResponseUserRoleHistory MapToUserPaginationGetResponseUserRoleHistory(UserRoleHistory entity);
-
-    [MapperIgnoreSource(nameof(Role.Id))]
-    private static partial UserPaginationGetResponseRole MapToUserPaginationGetResponseRole(Role role);
-
     [MapperIgnoreSource(nameof(UserMembershipHistory.UserId))]
+    [MapperIgnoreSource(nameof(UserMembershipHistory.MembershipId))]
     [MapperIgnoreSource(nameof(UserMembershipHistory.Id))]
     private static partial UserDetailsGetResponseUserMembershipHistory MapToUserDetailsGetResponseUserMembershipHistory(UserMembershipHistory entity);
 }

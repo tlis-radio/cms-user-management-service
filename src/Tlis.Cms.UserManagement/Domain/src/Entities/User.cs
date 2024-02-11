@@ -14,7 +14,7 @@ public class User : BaseEntity
 
     public string Abouth { get; set; } = null!;
 
-    public string? ProfileImageUrl { get; set; }
+    public Guid? ProfileImageId { get; set; }
 
     public bool PreferNicknameOverName { get; set; }
 

@@ -19,20 +19,13 @@ public sealed class UserDetailsGetResponse
     public string Abouth { get; set; } = null!;
 
     [Required]
-    public string ProfileImageUrl { get; set; } = null!;
+    public Guid? ProfileImageId { get; set; }
 
     [Required]
     public bool IsActive { get; set; }
 
     [Required]
     public bool PreferNicknameOverName { get; set; }
-
-    [Required]
-    public DateOnly MemberSinceDate { get; set; }
-
-    public DateOnly? MembershipEndedDate { get; set; }
-
-    public string? MembershipEndedReason { get; set; }
 
     public string? ExternalId { get; set; }
 

@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Annotations;
 using Tlis.Cms.UserManagement.Api.Constants;
-using Tlis.Cms.UserManagement.Api.Controllers.Attributes;
 using Tlis.Cms.UserManagement.Application.Contracts.Api.Requests;
 using Tlis.Cms.UserManagement.Application.Contracts.Api.Responses;
 
@@ -97,24 +96,6 @@ public sealed class UserController(IMediator mediator) : ControllerBase
         request.Id = id;
 
         var response = await mediator.Send(request);
-
-        return response is null ? BadRequest() : NoContent();
-    }
-
-    [HttpPost("{id:guid}/profile-image")]
-    [Authorize(Policy.UserWrite)]
-    [RequestSizeLimit(5000000)]
-    [FormFileContentTypeFilter(ContentType = "image/jpeg,image/png")]
-    [Produces(MediaTypeNames.Application.Json)]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    [SwaggerOperation("Upload user's profile image.",
-        "If user already has an image current profile image will be deleted and replaced with this new image. Maximal allowed size is 5 Megabyte.")]
-    public async ValueTask<ActionResult<BaseCreateResponse>> UploadProfileImage([FromRoute] Guid id, IFormFile image)
-    {
-        var response = await mediator.Send(new UserProfileImageUploadRequest { Id = id, Image = image });
 
         return response is null ? BadRequest() : NoContent();
     }

@@ -14,10 +14,10 @@ internal sealed class UserUpdateRequestHandler(IUnitOfWork unitOfWork)
         var user = await unitOfWork.UserRepository.GetByIdAsync(request.Id, asTracking: true);
         if (user is null) return false;
 
-        user.Firstname = request.Firstname ?? user.Firstname;
-        user.Lastname = request.Lastname ?? user.Lastname;
-        user.Nickname = request.Nickname ?? user.Nickname;
-        user.Abouth = request.Description ?? user.Abouth;
+        user.Firstname = request.Firstname;
+        user.Lastname = request.Lastname;
+        user.Nickname = request.Nickname;
+        user.Abouth = request.Description;
 
         await unitOfWork.SaveChangesAsync();
 

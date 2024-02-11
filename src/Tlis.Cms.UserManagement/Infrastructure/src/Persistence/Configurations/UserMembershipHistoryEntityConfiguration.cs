@@ -13,12 +13,18 @@ internal sealed class UserMembershipHistoryEntityConfiguration : IEntityTypeConf
         builder.Property(x => x.Id).ValueGeneratedOnAdd().HasValueGenerator((_, _) => new GuidValueGenerator());
 
         builder.Property(x => x.UserId).IsRequired();
+        builder.Property(x => x.MembershipId).IsRequired();
         builder.Property(x => x.ChangeDate).IsRequired();
-        builder.Property(x => x.Status).HasConversion<string>().IsRequired();
         builder.Property(x => x.Description);
 
         builder.HasIndex(x => x.Id);
         builder.HasIndex(x => x.UserId);
+
+        builder
+            .HasOne<Membership>(x => x.Membership)
+            .WithMany()
+            .HasForeignKey(x => x.MembershipId)
+            .OnDelete(DeleteBehavior.NoAction); // TODO: test
 
         builder
             .HasOne<User>()

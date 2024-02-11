@@ -12,17 +12,18 @@ public sealed class UserUpdateRequest : IRequest<bool>
     public Guid Id { get; set; }
 
     [SwaggerSchema(Description = "User's first name")]
-    [DefaultValue(null)]
-    public string? Firstname { get; set; }
+    [JsonRequired]
+    public string Firstname { get; set; } = null!;
 
     [SwaggerSchema(Description = "User's last name")]
-    [DefaultValue(null)]
-    public string? Lastname { get; set; }
+    [JsonRequired]
+    public string Lastname { get; set; } = null!;
 
     [SwaggerSchema(Description = "User's nickname or alias")]
-    [DefaultValue(null)]
-    public string? Nickname { get; set; }
+    [JsonRequired]
+    public string Nickname { get; set; } = null!;
 
     [SwaggerSchema(Description = "User's description or bio")]
-    public string? Description { get; set; }
+    [JsonRequired]
+    public string Description { get; set; } = null!;
 }

@@ -14,10 +14,6 @@ public sealed class UserRoleHistoryUpdateRequest : IRequest<bool>
     [JsonIgnore]
     public Guid HistoryId { get; set; }
 
-    [SwaggerSchema(Description = "The user's role or permission level within the service or platform.")]
-    [Required]
-    public required Guid RoleId { get; set; }
-
     [SwaggerSchema(Description = "The date on which the user began their current role or position within TLIS.")]
     [Required]
     public required DateTime FunctionStartDate { get; set; }

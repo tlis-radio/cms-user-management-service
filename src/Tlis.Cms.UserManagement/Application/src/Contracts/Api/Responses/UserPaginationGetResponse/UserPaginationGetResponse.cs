@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Tlis.Cms.UserManagement.Application.Contracts.Api.Responses;
@@ -19,26 +18,7 @@ public sealed class UserPaginationGetResponse
     public string Nickname { get; set; } = null!;
 
     [Required]
-    public string Abouth { get; set; } = null!;
-
-    [Required]
-    public string ProfileImageUrl { get; set; } = null!;
-
-    [Required]
     public bool IsActive { get; set; }
 
-    [Required]
-    public bool PreferNicknameOverName { get; set; }
-
-    [Required]
-    public DateOnly MemberSinceDate { get; set; }
-
-    public DateOnly? MembershipEndedDate { get; set; }
-
-    public string? MembershipEndedReason { get; set; }
-
     public string? Email { get; set; }
-
-    [Required]
-    public List<UserPaginationGetResponseUserRoleHistory> RoleHistory { get; set; } = [];
 }
