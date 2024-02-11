@@ -21,9 +21,21 @@ public class MembershipEntityConfiguration : IEntityTypeConfiguration<Membership
 
         builder.HasData(new List<Membership>()
         {
-            new () { Id = Guid.NewGuid(), Status = MembershipStatus.Active },
-            new () { Id = Guid.NewGuid(), Status = MembershipStatus.Archive },
-            new () { Id = Guid.NewGuid(), Status = MembershipStatus.Postponed }
+            new ()
+            {
+                Id = Guid.Parse("80126b05-9dab-4709-aa6a-39baa5bafe79"),
+                Status = MembershipStatus.Active
+            },
+            new ()
+            {
+                Id = Guid.Parse("a7c0bea2-2812-40b6-9836-d4b5accae95a"),
+                Status = MembershipStatus.Archive
+            },
+            new ()
+            {
+                Id = Guid.Parse("cfaeecff-d26b-44f2-bfa1-c80ab79983a9"),
+                Status = MembershipStatus.Postponed
+            }
         });
     }
 }

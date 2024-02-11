@@ -126,8 +126,8 @@ namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Migrations
                 columns: new[] { "id", "status" },
                 values: new object[,]
                 {
-                    { new Guid("80126b05-9dab-4709-aa6a-39baa5bafe79"), "Archive" },
-                    { new Guid("a7c0bea2-2812-40b6-9836-d4b5accae95a"), "Active" },
+                    { new Guid("80126b05-9dab-4709-aa6a-39baa5bafe79"), "Active" },
+                    { new Guid("a7c0bea2-2812-40b6-9836-d4b5accae95a"), "Archive" },
                     { new Guid("cfaeecff-d26b-44f2-bfa1-c80ab79983a9"), "Postponed" }
                 });
 
@@ -137,9 +137,13 @@ namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Migrations
                 columns: new[] { "id", "name" },
                 values: new object[,]
                 {
-                    { new Guid("a9a9040c-fbbd-4aa6-b0dc-56de7265ee7f"), "technician" },
-                    { new Guid("cbec6f46-a2e8-4fb3-a126-fe4e51e5ead2"), "system-admin" },
-                    { new Guid("ed7cafb5-f2bf-4fbe-972c-18fa4f056b69"), "moderator" }
+                    { new Guid("4971ba3e-5a40-42cf-b9d9-17c49d9da309"), "dramaturge-dj" },
+                    { new Guid("8570d900-396f-4b78-bf69-5065e2fe8acf"), "marketing-pr" },
+                    { new Guid("a9a9040c-fbbd-4aa6-b0dc-56de7265ee7f"), "system-admin" },
+                    { new Guid("cbec6f46-a2e8-4fb3-a126-fe4e51e5ead2"), "technician" },
+                    { new Guid("ed7cafb5-f2bf-4fbe-972c-18fa4f056b69"), "moderator" },
+                    { new Guid("f5bdf1df-8406-44d6-b1a1-942f7bde7b23"), "web-developer" },
+                    { new Guid("fab1118e-38b9-4164-b222-66378654fcf4"), "graphic" }
                 });
 
             migrationBuilder.CreateIndex(

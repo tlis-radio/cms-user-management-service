@@ -137,20 +137,23 @@ public sealed class UserController(IMediator mediator) : ControllerBase
         return response ? NoContent() : BadRequest();
     }
 
-    [HttpPut("{id:guid}/membership")]
+    [HttpPost("{id:guid}/membership/history")]
     [Authorize(Policy.UserWrite)]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [Produces(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(StatusCodes.Status201Created)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    [SwaggerOperation("Update user's membership")]
-    public async ValueTask<ActionResult> UpdateUserMembership([FromRoute] Guid id, [FromBody, Required] UserMembershipUpdateRequest request)
+    [SwaggerOperation("Add new entry into user's membership history")]
+    public async ValueTask<ActionResult<BaseCreateResponse>> AddMembershipHistoryToUser(
+        [FromRoute] Guid id,
+        [FromBody, Required] MembershipHistoryToUserAddRequest request)
     {
         request.UserId = id;
 
         var response = await mediator.Send(request);
 
-        return response ? NoContent() : BadRequest();
+        return response is null ? BadRequest() : NoContent();
     }
 
     [HttpDelete("{id:guid}")]

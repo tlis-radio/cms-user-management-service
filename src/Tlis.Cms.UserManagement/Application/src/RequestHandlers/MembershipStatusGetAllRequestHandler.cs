@@ -9,16 +9,16 @@ using Tlis.Cms.UserManagement.Infrastructure.Persistence.Interfaces;
 
 namespace Tlis.Cms.UserManagement.Application.RequestHandlers;
 
-internal sealed class MemebershipStatusGetAllRequestHandler(IUnitOfWork unitOfWork)
-    : IRequestHandler<MemebershipStatusGetAllRequest, MemebershipStatusGetAllResponse>
+internal sealed class MembershipStatusGetAllRequestHandler(IUnitOfWork unitOfWork)
+    : IRequestHandler<MembershipStatusGetAllRequest, MembershipStatusGetAllResponse>
 {
-    public async Task<MemebershipStatusGetAllResponse> Handle(MemebershipStatusGetAllRequest request, CancellationToken cancellationToken)
+    public async Task<MembershipStatusGetAllResponse> Handle(MembershipStatusGetAllRequest request, CancellationToken cancellationToken)
     {
         var memberships = await unitOfWork.MembershipRepository.GetAll();
 
-        return new MemebershipStatusGetAllResponse
+        return new MembershipStatusGetAllResponse
         {
-            Results = memberships.Select(membership => new MemebershipStatusGetAllResponseItem
+            Results = memberships.Select(membership => new MembershipStatusGetAllResponseItem
             {
                 Id = membership.Id,
                 Name = Enum.GetName(membership.Status) ?? throw new Exception($"Unable to Enum.GetName for {membership.Status}")
