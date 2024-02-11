@@ -12,7 +12,7 @@ using Tlis.Cms.UserManagement.Infrastructure.Persistence;
 namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Migrations
 {
     [DbContext(typeof(UserManagementDbContext))]
-    [Migration("20240211091400_Initial")]
+    [Migration("20240211133253_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -49,12 +49,12 @@ namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("a7c0bea2-2812-40b6-9836-d4b5accae95a"),
+                            Id = new Guid("80126b05-9dab-4709-aa6a-39baa5bafe79"),
                             Status = "Active"
                         },
                         new
                         {
-                            Id = new Guid("80126b05-9dab-4709-aa6a-39baa5bafe79"),
+                            Id = new Guid("a7c0bea2-2812-40b6-9836-d4b5accae95a"),
                             Status = "Archive"
                         },
                         new
@@ -87,18 +87,38 @@ namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Migrations
                     b.HasData(
                         new
                         {
-                            Id = new Guid("cbec6f46-a2e8-4fb3-a126-fe4e51e5ead2"),
+                            Id = new Guid("a9a9040c-fbbd-4aa6-b0dc-56de7265ee7f"),
                             Name = "system-admin"
                         },
                         new
                         {
-                            Id = new Guid("a9a9040c-fbbd-4aa6-b0dc-56de7265ee7f"),
+                            Id = new Guid("cbec6f46-a2e8-4fb3-a126-fe4e51e5ead2"),
                             Name = "technician"
                         },
                         new
                         {
                             Id = new Guid("ed7cafb5-f2bf-4fbe-972c-18fa4f056b69"),
                             Name = "moderator"
+                        },
+                        new
+                        {
+                            Id = new Guid("fab1118e-38b9-4164-b222-66378654fcf4"),
+                            Name = "graphic"
+                        },
+                        new
+                        {
+                            Id = new Guid("8570d900-396f-4b78-bf69-5065e2fe8acf"),
+                            Name = "marketing-pr"
+                        },
+                        new
+                        {
+                            Id = new Guid("4971ba3e-5a40-42cf-b9d9-17c49d9da309"),
+                            Name = "dramaturge-dj"
+                        },
+                        new
+                        {
+                            Id = new Guid("f5bdf1df-8406-44d6-b1a1-942f7bde7b23"),
+                            Name = "web-developer"
                         });
                 });
 

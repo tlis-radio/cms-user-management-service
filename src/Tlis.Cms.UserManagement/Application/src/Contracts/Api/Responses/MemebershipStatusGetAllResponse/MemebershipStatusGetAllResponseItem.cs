@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Tlis.Cms.UserManagement.Application.Contracts.Api.Responses;
 
-public sealed class MemebershipStatusGetAllResponseItem
+public sealed class MembershipStatusGetAllResponseItem
 {
     public Guid Id { get; set; }
 

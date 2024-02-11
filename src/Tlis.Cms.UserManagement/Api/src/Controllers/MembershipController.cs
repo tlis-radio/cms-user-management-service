@@ -17,12 +17,12 @@ public sealed class MembershipController(IMediator mediator) : ControllerBase
     [Authorize(Policy.UserRead)]
     [SwaggerOperation("Get all membership statuses")]
     [Produces(MediaTypeNames.Application.Json)]
-    [ProducesResponseType(typeof(MemebershipStatusGetAllResponse), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(MembershipStatusGetAllResponse), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    public async ValueTask<ActionResult<MemebershipStatusGetAllResponse>> GetAll()
+    public async ValueTask<ActionResult<MembershipStatusGetAllResponse>> GetAll()
     {
-        var response = await mediator.Send(new MemebershipStatusGetAllRequest());
+        var response = await mediator.Send(new MembershipStatusGetAllRequest());
 
         return response is null
             ? NotFound()
