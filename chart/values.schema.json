@@ -18,9 +18,6 @@
           "properties": {
             "postgres": {
               "type": "string"
-            },
-            "storageAccount": {
-              "type": "string"
             }
           }
         },

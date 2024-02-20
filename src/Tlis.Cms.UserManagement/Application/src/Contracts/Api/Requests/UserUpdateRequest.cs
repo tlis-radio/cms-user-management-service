@@ -25,5 +25,5 @@ public sealed class UserUpdateRequest : IRequest<bool>
 
     [SwaggerSchema(Description = "User's description or bio")]
     [JsonRequired]
-    public string Description { get; set; } = null!;
+    public string Abouth { get; set; } = null!;
 }

@@ -17,7 +17,7 @@ internal sealed class UserUpdateRequestHandler(IUnitOfWork unitOfWork)
         user.Firstname = request.Firstname;
         user.Lastname = request.Lastname;
         user.Nickname = request.Nickname;
-        user.Abouth = request.Description;
+        user.Abouth = request.Abouth;
 
         await unitOfWork.SaveChangesAsync();
 
