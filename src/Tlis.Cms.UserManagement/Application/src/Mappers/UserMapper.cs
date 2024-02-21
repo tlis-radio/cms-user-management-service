@@ -27,7 +27,8 @@ internal static partial class UserMapper
     [MapperIgnoreSource(nameof(User.ProfileImageId))]
     [MapperIgnoreSource(nameof(User.PreferNicknameOverName))]
     public static partial UserPaginationGetResponse ToPaginationDto(User entity);
-    
+
+    [MapperIgnoreTarget(nameof(User.Id))]
     [MapperIgnoreTarget(nameof(User.IsActive))]
     [MapperIgnoreTarget(nameof(User.ProfileImageId))]
     [MapperIgnoreTarget(nameof(User.ExternalId))]
