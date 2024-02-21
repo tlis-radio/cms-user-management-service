@@ -12,6 +12,7 @@ internal class GetUsersNickNameRequestConsumer(IServiceProvider serviceProvider,
 {
     protected override async Task<GetUsersNickNameResponse> ProcessMessage(GetUsersNickNameRequest request, IUnitOfWork unitOfWork)
     {
+        // TODO: Mediatr
         var result = await unitOfWork.UserRepository.GetUsersWithOnlyNickName(request.Ids);
 
         return new GetUsersNickNameResponse
