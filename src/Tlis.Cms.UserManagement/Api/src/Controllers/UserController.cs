@@ -54,25 +54,8 @@ public sealed class UserController(IMediator mediator) : ControllerBase
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    [SwaggerOperation("Create new active user.", "Crate new user with <code>IsActive</code> property set to <code>true</code>")]
-    public async ValueTask<ActionResult<BaseCreateResponse>> CreateUser([FromBody, Required] UserCreateRequest request)
-    {
-        var response = await mediator.Send(request);
-
-        return response is null
-            ? BadRequest()
-            : CreatedAtAction(nameof(GetUserDetails), new { response.Id } , response);
-    }
-
-    [HttpPost("archive")]
-    [Authorize(Policy.UserWrite)]
-    [Produces(MediaTypeNames.Application.Json)]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    [SwaggerOperation("Create new archive user.", "Crate new user with <code>IsActive</code> property set to <code>false</code>")]
-    public async ValueTask<ActionResult<BaseCreateResponse>> ArchiveCreateUser([FromBody, Required] ArchiveUserCreateRequest request)
+    [SwaggerOperation("Create new user.", "Crate new user")]
+    public async ValueTask<ActionResult<BaseCreateResponse>> Create([FromBody, Required] UserCreateRequest request)
     {
         var response = await mediator.Send(request);
 

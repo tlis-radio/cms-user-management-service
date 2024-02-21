@@ -17,8 +17,7 @@ internal sealed class UserPaginationGetRequestHandler(IUnitOfWork unitOfWork)
     {
         var users = await unitOfWork.UserRepository.PaginationAsync(
             request.Limit,
-            request.Page,
-            request.IsActive);
+            request.Page);
 
         return new PaginationResponse<UserPaginationGetResponse>
         {

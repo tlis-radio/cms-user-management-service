@@ -16,7 +16,6 @@ internal sealed class UserEntityConfiguration : IEntityTypeConfiguration<User>
         builder.Property(x => x.Lastname).IsRequired();
         builder.Property(x => x.Nickname).IsRequired();
         builder.Property(x => x.Abouth).IsRequired();
-        builder.Property(x => x.IsActive).IsRequired();
         builder.Property(x => x.ProfileImageId);
         builder.Property(x => x.ExternalId);
         builder.Property(x => x.Email);

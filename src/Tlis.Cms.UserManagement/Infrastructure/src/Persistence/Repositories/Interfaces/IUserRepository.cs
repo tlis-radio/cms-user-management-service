@@ -14,5 +14,5 @@ public interface IUserRepository : IGenericRepository<User>
 
     Task<User?> GetUserDetailsById(Guid id, bool asTracking);
 
-    Task<PaginationDto<User>> PaginationAsync(int limit, int page, bool isActive);
+    Task<PaginationDto<User>> PaginationAsync(int limit, int page);
 }

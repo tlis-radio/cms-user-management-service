@@ -18,8 +18,6 @@ public class User : BaseEntity
 
     public bool PreferNicknameOverName { get; set; }
 
-    public bool IsActive { get; set; }
-
     public string? ExternalId { get; set; }
 
     public string? Email { get; set; }

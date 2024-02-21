@@ -22,9 +22,6 @@ public sealed class UserDetailsGetResponse
     public Guid? ProfileImageId { get; set; }
 
     [Required]
-    public bool IsActive { get; set; }
-
-    [Required]
     public bool PreferNicknameOverName { get; set; }
 
     public string? ExternalId { get; set; }

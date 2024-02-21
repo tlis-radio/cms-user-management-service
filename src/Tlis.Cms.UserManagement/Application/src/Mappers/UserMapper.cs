@@ -8,15 +8,6 @@ namespace Tlis.Cms.UserManagement.Application.Mappers;
 [Mapper]
 internal static partial class UserMapper
 {
-    public static User ToEntity(UserCreateRequest dto)
-    {
-        var entity = MapToUser(dto);
-
-        entity.IsActive = true;
-        
-        return entity;
-    }
-
     [MapperIgnoreSource(nameof(User.Id))]
     public static partial UserDetailsGetResponse? ToDto(User? entity);
     
@@ -29,32 +20,19 @@ internal static partial class UserMapper
     public static partial UserPaginationGetResponse ToPaginationDto(User entity);
 
     [MapperIgnoreTarget(nameof(User.Id))]
-    [MapperIgnoreTarget(nameof(User.IsActive))]
     [MapperIgnoreTarget(nameof(User.ProfileImageId))]
     [MapperIgnoreTarget(nameof(User.ExternalId))]
     [MapperIgnoreTarget(nameof(User.MembershipHistory))]
-    [MapperIgnoreSource(nameof(ArchiveUserCreateRequest.Password))]
-    [MapperIgnoreSource(nameof(ArchiveUserCreateRequest.MembershipHistory))]
-    public static partial User ToEntity(ArchiveUserCreateRequest dto);
+    [MapperIgnoreSource(nameof(UserCreateRequest.Password))]
+    [MapperIgnoreSource(nameof(UserCreateRequest.MembershipHistory))]
+    public static partial User ToEntity(UserCreateRequest dto);
     
-    [MapperIgnoreTarget(nameof(User.IsActive))]
-    [MapperIgnoreTarget(nameof(User.ProfileImageId))]
-    [MapperIgnoreTarget(nameof(User.ExternalId))]
-    [MapperIgnoreTarget(nameof(User.Id))]
-    [MapperIgnoreTarget(nameof(User.RoleHistory))]
-    [MapperIgnoreTarget(nameof(User.MembershipHistory))]
-    [MapperIgnoreSource(nameof(ArchiveUserCreateRequest.Password))]
-    [MapperIgnoreSource(nameof(UserCreateRequest.RoleId))]
-    [MapperIgnoreSource(nameof(UserCreateRequest.FunctionStartDate))]
-    [MapperIgnoreSource(nameof(UserCreateRequest.MemberSinceDate))]
-    private static partial User MapToUser(UserCreateRequest dto);
-
-    [MapProperty(nameof(ArchiveUserRoleHistoryCreateRequest.RoleId), nameof(UserRoleHistory.RoleId))]
+    [MapProperty(nameof(UserRoleHistoryCreateRequest.RoleId), nameof(UserRoleHistory.RoleId))]
     [MapperIgnoreTarget(nameof(UserRoleHistory.UserId))]
     [MapperIgnoreTarget(nameof(UserRoleHistory.User))]
     [MapperIgnoreTarget(nameof(UserRoleHistory.Role))]
     [MapperIgnoreTarget(nameof(UserRoleHistory.Id))]
-    private static partial UserRoleHistory MapToUserRoleHistory(ArchiveUserRoleHistoryCreateRequest dto);
+    private static partial UserRoleHistory MapToUserRoleHistory(UserRoleHistoryCreateRequest dto);
 
     [MapperIgnoreSource(nameof(UserRoleHistory.UserId))]
     [MapperIgnoreSource(nameof(UserRoleHistory.RoleId))]
