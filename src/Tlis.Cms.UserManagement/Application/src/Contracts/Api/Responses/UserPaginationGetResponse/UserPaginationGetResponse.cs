@@ -17,8 +17,5 @@ public sealed class UserPaginationGetResponse
     [Required]
     public string Nickname { get; set; } = null!;
 
-    [Required]
-    public bool IsActive { get; set; }
-
     public string? Email { get; set; }
 }

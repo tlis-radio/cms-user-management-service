@@ -1,8 +1,10 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using MediatR;
 using Swashbuckle.AspNetCore.Annotations;
 using Tlis.Cms.UserManagement.Application.Contracts.Api.Responses;
+using Tlis.Cms.UserManagement.Domain.Constants;
 
 namespace Tlis.Cms.UserManagement.Application.Contracts.Api.Requests;
 
@@ -28,21 +30,43 @@ public sealed class UserCreateRequest : IRequest<BaseCreateResponse>
     [Required]
     public required string Abouth { get; set; }
 
-    [SwaggerSchema(Description = "User's date on which the user became a member of TLIS.")]
-    [Required]
-    public DateTime MemberSinceDate { get; set; }
-
     [SwaggerSchema(Description = "User's email address")]
     public string? Email { get; set; }
 
     [SwaggerSchema(Description = "User's password. If no password is provided user wont be able to login to admin.")]
     public string? Password { get; set; }
 
-    [SwaggerSchema(Description = "The user's role or permission level within the service or platform.")]
+    [SwaggerSchema(Description = "User's role history.")]
     [Required]
-    public required Guid RoleId { get; set; }
+    public required List<UserRoleHistoryCreateRequest> RoleHistory { get; set; } = [];
 
-    [SwaggerSchema(Description = "The date on which the user began their current role or position within TLIS.")]
+    [SwaggerSchema(Description = "User's membership history.")]
+    [Required]
+    public required List<UserMembershipHistoryCreateRequest> MembershipHistory { get; set; } = []; 
+}
+
+public sealed class UserRoleHistoryCreateRequest
+{
+    [SwaggerSchema(Description = "Id of the role.")]
+    [Required]
+    public Guid RoleId { get; set; }
+
+    [SwaggerSchema(Description = "The starting date of when user started this position.")]
     [Required]
     public DateTime FunctionStartDate { get; set; }
+
+    [SwaggerSchema(Description = "The ending date of when user started this position.")]
+    public DateTime? FunctionEndDate { get; set; }
+
+    [SwaggerSchema(Description = "Description why this position was given to user.")]
+    public string? Description { get; set; }
+}
+
+public sealed class UserMembershipHistoryCreateRequest
+{
+    public MembershipStatus Status { get; set; }
+
+    public DateTime ChangeDate { get; set; }
+
+    public string Description { get; set; } = null!;
 }

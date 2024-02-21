@@ -14,38 +14,41 @@ namespace Tlis.Cms.UserManagement.Application.RequestHandlers;
 
 internal sealed class UserCreateRequestHandler(
     IAuthProviderManagementService authProviderManagementService,
-    IUnitOfWork unitOfWork,
-    IRoleService roleService) : IRequestHandler<UserCreateRequest, BaseCreateResponse>
+    IRoleService roleService,
+    IUnitOfWork unitOfWork) : IRequestHandler<UserCreateRequest, BaseCreateResponse>
 {
     public async Task<BaseCreateResponse> Handle(UserCreateRequest request, CancellationToken cancellationToken)
     {
         var userToCreate = UserMapper.ToEntity(request);
-        userToCreate.IsActive = true;
 
-        var role = await roleService.GetByIdAsync(request.RoleId) ?? throw new UserRoleNotFoundException(request.RoleId);
-        var membershipId = await unitOfWork.MembershipRepository.GetIdByStatus(MembershipStatus.Active);
-
-        if (membershipId is null)
+        foreach (var membershipHistory in request.MembershipHistory)
         {
-            throw new MembershipNotFoundException(MembershipStatus.Active);
+            var membershipId = await unitOfWork.MembershipRepository.GetIdByStatus(MembershipStatus.Archive)
+                ?? throw new MembershipNotFoundException(MembershipStatus.Archive);
+
+            userToCreate.MembershipHistory.Add(new UserMembershipHistory
+            {
+                MembershipId = membershipId,
+                ChangeDate = membershipHistory.ChangeDate,
+                Description = membershipHistory.Description
+            });
         }
 
-        userToCreate.MembershipHistory = [
-            new UserMembershipHistory
-            {
-                ChangeDate = request.MemberSinceDate,
-                MembershipId = membershipId.Value
-            }
-        ];
+        foreach (var history in request.RoleHistory)
+        {
+            var role = await roleService.GetByIdAsync(history.RoleId)
+                ?? throw new UserRoleNotFoundException(history.RoleId);
 
-        userToCreate.RoleHistory =
-        [
-            new UserRoleHistory
-            {
-                RoleId = role.Id,
-                FunctionStartDate = request.FunctionStartDate
-            }
-        ];
+            userToCreate.RoleHistory.Add(
+                new UserRoleHistory
+                {
+                    RoleId = role.Id,
+                    FunctionStartDate = history.FunctionStartDate,
+                    FunctionEndDate = history.FunctionEndDate,
+                    Description = history.Description
+                }
+            );
+        }
 
         if (!string.IsNullOrEmpty(request.Email) && !string.IsNullOrEmpty(request.Password))
         {

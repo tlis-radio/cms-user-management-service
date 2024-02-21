@@ -47,13 +47,11 @@ internal sealed class UserRepository(UserManagementDbContext context)
             .FirstOrDefaultAsync(u => u.Id == id);
     }
     
-    public async Task< PaginationDto<User>> PaginationAsync(int limit, int pageNumber, bool isActive)
+    public async Task< PaginationDto<User>> PaginationAsync(int limit, int pageNumber)
     {
-        var queryGetTotalCount = await ConfigureTracking(DbSet.AsQueryable(), false)
-            .Where(x => x.IsActive == isActive).CountAsync();
+        var queryGetTotalCount = await ConfigureTracking(DbSet.AsQueryable(), false).CountAsync();
         
-        var pageQuery = ConfigureTracking(DbSet.AsQueryable(), false)
-            .Where(x => x.IsActive == isActive);
+        var pageQuery = ConfigureTracking(DbSet.AsQueryable(), false);
 
         var page = await pageQuery
             .OrderBy(u => u.Nickname)
