@@ -45,23 +45,6 @@
               "type": "string"
             }
           }
-        },
-        "rabbitmq": {
-          "type": "object",
-          "properties": {
-            "hostName": {
-              "type": "string"
-            },
-            "userName": {
-              "type": "string"
-            },
-            "password": {
-              "type": "string"
-            },
-            "virtualHost": {
-              "type": "string"
-            }
-          }
         }
       }
     }

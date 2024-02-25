@@ -8,6 +8,14 @@ namespace Tlis.Cms.UserManagement.Application.Mappers;
 [Mapper]
 internal static partial class UserMapper
 {
+    [MapperIgnoreSource(nameof(User.ExternalId))]
+    [MapperIgnoreSource(nameof(User.RoleHistory))]
+    [MapperIgnoreSource(nameof(User.MembershipHistory))]
+    [MapperIgnoreSource(nameof(User.Abouth))]
+    [MapperIgnoreSource(nameof(User.ProfileImageId))]
+    [MapperIgnoreSource(nameof(User.PreferNicknameOverName))]
+    public static partial UserFilterGetResponse ToFilterDto(User entity);
+
     [MapperIgnoreSource(nameof(User.Id))]
     public static partial UserDetailsGetResponse? ToDto(User? entity);
     
