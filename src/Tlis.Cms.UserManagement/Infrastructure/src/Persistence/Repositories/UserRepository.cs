@@ -12,20 +12,6 @@ namespace Tlis.Cms.UserManagement.Infrastructure.Persistence.Repositories;
 internal sealed class UserRepository(UserManagementDbContext context)
     : GenericRepository<User>(context), IUserRepository
 {
-    public async Task<IList<UserWithOnlyNicknameDto>> GetUsersWithOnlyNickName(IEnumerable<Guid> ids)
-    {
-        var query = ConfigureTracking(DbSet.AsQueryable(), false);
-
-        return await query
-            .Where(u => ids.Contains(u.Id))
-            .Select(u => new UserWithOnlyNicknameDto
-                {
-                    Id = u.Id,
-                    Nickname = u.Nickname
-                })
-            .ToListAsync();
-    }
-
     public Task<User?> GetUserWithRoleHistoriesById(Guid id, bool asTracking)
     {
         var query = ConfigureTracking(DbSet.AsQueryable(), asTracking);
@@ -47,7 +33,7 @@ internal sealed class UserRepository(UserManagementDbContext context)
             .FirstOrDefaultAsync(u => u.Id == id);
     }
     
-    public async Task< PaginationDto<User>> PaginationAsync(int limit, int pageNumber)
+    public async Task<PaginationDto<User>> PaginationAsync(int limit, int pageNumber)
     {
         var queryGetTotalCount = await ConfigureTracking(DbSet.AsQueryable(), false).CountAsync();
         
@@ -66,5 +52,14 @@ internal sealed class UserRepository(UserManagementDbContext context)
             Page = pageNumber,
             Results = page
         };
+    }
+
+    public async Task<List<User>> FilterAsync(List<Guid> ids)
+    {
+        var query = ConfigureTracking(DbSet.AsQueryable(), false);
+
+        return await query
+            .Where(u => ids.Contains(u.Id))
+            .ToListAsync();
     }
 }

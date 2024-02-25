@@ -37,8 +37,24 @@ public sealed class UserController(IMediator mediator) : ControllerBase
     [ProducesResponseType(typeof(PaginationResponse<UserPaginationGetResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    [SwaggerOperation("Paging user's")]
+    [SwaggerOperation("Paging users")]
     public async ValueTask<ActionResult<PaginationResponse<UserPaginationGetResponse>>> Pagination([FromQuery] UserPaginationGetRequest request)
+    {
+        var response = await mediator.Send(request);
+
+        return response is null
+            ? NotFound()
+            : Ok(response);
+    }
+
+    [HttpGet("filter")]
+    [Authorize(Policy.UserRead)]
+    [Produces(MediaTypeNames.Application.Json)]
+    [ProducesResponseType(typeof(PaginationResponse<UserPaginationGetResponse>), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    [SwaggerOperation("Filter users")]
+    public async ValueTask<ActionResult<FilterResponse<UserFilterGetResponse>>> Pagination([FromQuery] UserFilterGetRequest request)
     {
         var response = await mediator.Send(request);
 

@@ -25,11 +25,5 @@ data:
             "Domain": {{ .Values.config.auth0.domain | quote }},
             "ClientId": {{ .Values.config.auth0.clientId | quote }},
             "ClientSecret": {{ .Values.config.auth0.clientSecret | quote }}
-        },
-        "RabbitMq": {
-            "HostName": {{ .Values.config.rabbitmq.hostName | quote }},
-            "UserName": {{ .Values.config.rabbitmq.userName | quote }},
-            "Password": {{ .Values.config.rabbitmq.password | quote }},
-            "VirtualHost": {{ .Values.config.rabbitmq.virtualHost | quote }}
         }
     }

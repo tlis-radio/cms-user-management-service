@@ -1,6 +1,5 @@
 using System.Text.Json.Serialization;
 using Tlis.Cms.UserManagement.Api.Extensions;
-using Tlis.Cms.UserManagement.Api.RpcConsumers;
 using Tlis.Cms.UserManagement.Application;
 using Tlis.Cms.UserManagement.Infrastructure;
 
@@ -19,8 +18,6 @@ namespace Tlis.Cms.UserManagement.Api
                 {
                     x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 });
-
-            builder.Services.AddHostedService<GetUsersNickNameRequestConsumer>();
 
             builder.Services.ConfigureProblemDetails();
             builder.Services.ConfigureSwagger();

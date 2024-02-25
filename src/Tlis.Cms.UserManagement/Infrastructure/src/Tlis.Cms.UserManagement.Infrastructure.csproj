@@ -27,7 +27,6 @@
     <PackageReference Include="Azure.Storage.Blobs" Version="12.19.1" />
     <PackageReference Include="Auth0.ManagementApi" Version="7.26.1" />
     <PackageReference Include="Auth0.AuthenticationApi" Version="7.26.1" />
-    <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
     <ProjectReference Include="..\..\Domain\src\Tlis.Cms.UserManagement.Domain.csproj" />
   </ItemGroup>
 
