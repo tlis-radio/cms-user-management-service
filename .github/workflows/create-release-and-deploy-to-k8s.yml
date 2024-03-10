@@ -104,7 +104,7 @@ jobs:
         --set config.connectionStrings.postgres="${{ secrets.POSTGRES_CONNECTION_STRING }}" \
         --set config.jwt.audience="${{ secrets.JWT_AUDIENCE }}" \
         --set config.jwt.authority="${{ secrets.JWT_AUTHORITY }}" \
-        --set config.jwt.issuer="${{ secrets.JWT_ISSUER }}"
+        --set config.jwt.issuer="${{ secrets.JWT_ISSUER }}" \
         --set config.auth0.domain="${{ secrets.AUTH0_DOMAIN }}" \
         --set config.auth0.clientId="${{ secrets.AUTH0_CLIENT_ID }}" \
         --set config.auth0.clientSecret="${{ secrets.AUTH0_CLIENT_SECRET }}"
