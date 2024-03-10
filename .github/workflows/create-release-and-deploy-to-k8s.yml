@@ -26,10 +26,10 @@ jobs:
         password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
     # build and push the image
     - run: |
-        docker build . --file api.Dockerfile --tag ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/cms-user-management:${{ github.ref_name }}
-        docker push ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/cms-user-management:${{ github.ref_name }}
-        docker build . --file cli.Dockerfile --tag ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/cms-user-management-cli:${{ github.ref_name }}
-        docker push ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/cms-user-management-cli:${{ github.ref_name }}
+        docker build . --file api.Dockerfile --tag ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/cms-user-management:${{ github.sha }}
+        docker push ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/cms-user-management:${{ github.sha }}
+        docker build . --file cli.Dockerfile --tag ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/cms-user-management-cli:${{ github.sha }}
+        docker push ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/cms-user-management-cli:${{ github.sha }}
 
   build-helm-chart-and-push-to-acr:
     name: 'Build helm chart and push to ACR'
@@ -49,7 +49,7 @@ jobs:
         echo $ | helm registry login ${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io --username ${{ secrets.CONTAINER_REGISTRY_USERNAME }} --password ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
     # package and push the chart
     - name: 'Package chart'
-      run: cd chart && helm package . --app-version ${{ github.ref_name }}
+      run: cd chart && helm package . --app-version ${{ github.sha }}
     # push the chart
     - name: 'Push chart to acr'
       run: cd chart && helm push cms-user-management-* oci://${{ env.AZURE_CONTAINER_REGISTRY }}.azurecr.io/helm
