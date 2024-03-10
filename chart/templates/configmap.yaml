@@ -19,7 +19,8 @@ data:
         },
         "Jwt": {
             "Audience": {{ .Values.config.jwt.audience | quote }},
-            "Authority": {{ .Values.config.jwt.authority | quote }}
+            "Authority": {{ .Values.config.jwt.authority | quote }},
+            "Issuer": {{ .Values.config.jwt.issuer | quote }}
         },
         "Auth0": {
             "Domain": {{ .Values.config.auth0.domain | quote }},

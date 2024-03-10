@@ -29,6 +29,9 @@
             },
             "authority": {
               "type": "string"
+            },
+            "issuer": {
+              "type": "string"
             }
           }
         },

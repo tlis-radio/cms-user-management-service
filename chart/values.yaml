@@ -8,6 +8,7 @@ config:
   jwt:
     audience: ""
     authority: ""
+    issuer: ""
   auth0:
     domain: ""
     clientId: ""
