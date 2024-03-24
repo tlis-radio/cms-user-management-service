@@ -1,0 +1,44 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Run Webapi",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/src/Tlis.Cms.UserManagement/Api/src/bin/Debug/net8.0/Tlis.Cms.UserManagement.Api.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/src/Tlis.Cms.UserManagement/Api/src",
+            "stopAtEntry": false,
+            "serverReadyAction": {
+                "action": "openExternally",
+                "pattern": "\\bNow listening on:\\s+(https?://\\S+)"
+            },
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        },
+        {
+            "name": "Cli apply migrations",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build-cli",
+            "program": "${workspaceFolder}/src/Tlis.Cms.UserManagement.Cli/src/bin/Debug/net8.0/Tlis.Cms.UserManagement.Cli.dll",
+            "args": ["migration"],
+            "cwd": "${workspaceFolder}/src/Tlis.Cms.UserManagement.Cli/src",
+            "stopAtEntry": false,
+            "env": {
+                "ASPNETCORE_ENVIRONMENT": "Development"
+            },
+            "sourceFileMap": {
+                "/Views": "${workspaceFolder}/Views"
+            }
+        }
+    ]
+}
