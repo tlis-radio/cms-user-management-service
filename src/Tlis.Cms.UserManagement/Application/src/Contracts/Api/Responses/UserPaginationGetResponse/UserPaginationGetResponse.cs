@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Tlis.Cms.UserManagement.Application.Contracts.Api.Responses;
@@ -18,4 +19,8 @@ public sealed class UserPaginationGetResponse
     public string Nickname { get; set; } = null!;
 
     public string? Email { get; set; }
+
+    public List<string> Roles { get; set; } = [];
+
+    public string? Status { get; set; } = null;
 }

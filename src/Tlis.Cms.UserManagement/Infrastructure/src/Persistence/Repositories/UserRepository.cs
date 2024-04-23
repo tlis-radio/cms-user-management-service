@@ -41,6 +41,10 @@ internal sealed class UserRepository(UserManagementDbContext context)
 
         var page = await pageQuery
             .OrderBy(u => u.Nickname)
+            .Include(x => x.MembershipHistory)
+                .ThenInclude(x => x.Membership)
+            .Include(x => x.RoleHistory)
+                .ThenInclude(x => x.Role)
             .Skip(limit * (pageNumber - 1))
             .Take(limit)
             .ToListAsync();

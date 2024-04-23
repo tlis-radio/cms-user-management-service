@@ -1,3 +1,5 @@
+using System;
+using System.Linq;
 using Riok.Mapperly.Abstractions;
 using Tlis.Cms.UserManagement.Application.Contracts.Api.Requests;
 using Tlis.Cms.UserManagement.Application.Contracts.Api.Responses;
@@ -8,6 +10,16 @@ namespace Tlis.Cms.UserManagement.Application.Mappers;
 [Mapper]
 internal static partial class UserMapper
 {
+    public static UserPaginationGetResponse ToPaginationDto(User entity)
+    {
+        var resposne = MapToPaginationDto(entity);
+
+        resposne.Roles = entity.RoleHistory.Select(x => x.Role!.Name).ToList();
+        resposne.Status = Enum.GetName(entity.MembershipHistory.OrderByDescending(x => x.ChangeDate).FirstOrDefault()!.Membership!.Status);
+
+        return resposne;
+    }
+
     [MapperIgnoreSource(nameof(User.ExternalId))]
     [MapperIgnoreSource(nameof(User.RoleHistory))]
     [MapperIgnoreSource(nameof(User.MembershipHistory))]
@@ -19,13 +31,7 @@ internal static partial class UserMapper
     [MapperIgnoreSource(nameof(User.Id))]
     public static partial UserDetailsGetResponse? ToDto(User? entity);
     
-    [MapperIgnoreSource(nameof(User.ExternalId))]
-    [MapperIgnoreSource(nameof(User.RoleHistory))]
-    [MapperIgnoreSource(nameof(User.MembershipHistory))]
-    [MapperIgnoreSource(nameof(User.Abouth))]
-    [MapperIgnoreSource(nameof(User.ProfileImageId))]
-    [MapperIgnoreSource(nameof(User.PreferNicknameOverName))]
-    public static partial UserPaginationGetResponse ToPaginationDto(User entity);
+
 
     [MapperIgnoreTarget(nameof(User.Id))]
     [MapperIgnoreTarget(nameof(User.ProfileImageId))]
@@ -55,4 +61,14 @@ internal static partial class UserMapper
     [MapperIgnoreSource(nameof(UserMembershipHistory.MembershipId))]
     [MapperIgnoreSource(nameof(UserMembershipHistory.Id))]
     private static partial UserDetailsGetResponseUserMembershipHistory MapToUserDetailsGetResponseUserMembershipHistory(UserMembershipHistory entity);
+
+    [MapperIgnoreSource(nameof(User.ExternalId))]
+    [MapperIgnoreSource(nameof(User.RoleHistory))]
+    [MapperIgnoreSource(nameof(User.MembershipHistory))]
+    [MapperIgnoreSource(nameof(User.Abouth))]
+    [MapperIgnoreSource(nameof(User.ProfileImageId))]
+    [MapperIgnoreSource(nameof(User.PreferNicknameOverName))]
+    [MapperIgnoreTarget(nameof(UserPaginationGetResponse.Status))]
+    [MapperIgnoreTarget(nameof(UserPaginationGetResponse.Roles))]
+    private static partial UserPaginationGetResponse MapToPaginationDto(User entity);
 }
