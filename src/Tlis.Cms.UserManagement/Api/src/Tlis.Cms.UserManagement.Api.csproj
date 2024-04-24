@@ -10,6 +10,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Application\src\Tlis.Cms.UserManagement.Application.csproj" />
     <ProjectReference Include="..\..\Infrastructure\src\Tlis.Cms.UserManagement.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\Shared\src\Tlis.Cms.UserManagement.Shared.csproj" />
     <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="8.0.1" />
 
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="8.0.1" />
@@ -23,7 +24,15 @@
     </PackageReference>
     <PackageReference Include="MediatR" Version="12.2.0" />
     <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
-
+    <PackageReference Include="OpenTelemetry.Instrumentation.AspNetCore" Version="1.8.1" />
+    <PackageReference Include="OpenTelemetry.Extensions.Hosting" Version="1.8.0" />
+    <PackageReference Include="OpenTelemetry.Exporter.OpenTelemetryProtocol" Version="1.8.0" />
+    <PackageReference Include="OpenTelemetry.Exporter.Console" Version="1.8.0" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.EntityFrameworkCore" Version="1.0.0-beta.11" />
+    <PackageReference Include="OpenTelemetry.Instrumentation.Http" Version="1.8.1" />
+    <PackageReference Include="Npgsql.OpenTelemetry" Version="8.0.2" />
+    <PackageReference Include="OpenTelemetry.ResourceDetectors.Container" Version="1.0.0-beta.7" />
+    <PackageReference Include="OpenTelemetry.ResourceDetectors.Host" Version="0.1.0-alpha.3" />
   </ItemGroup>
 
 

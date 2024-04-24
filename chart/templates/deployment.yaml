@@ -29,6 +29,12 @@ spec:
           env:
             - name: ASPNETCORE_URLS
               value: http://+:80
+            - name: OTEL_EXPORTER_OTLP_ENDPOINT
+              value: {{ .Values.config.otel.exporterOtlpEndpoint }}
+            - name: OTEL_EXPORTER_OTLP_PROTOCOL
+              value: otlp
+            - name: OTEL_RESOURCE_ATTRIBUTES
+              value: deployment.environment={{ .Values.environment }}
       initContainers:
         - name: ef-migration
           image: tliscr.azurecr.io/cms-user-management-cli:{{ .Chart.AppVersion }}

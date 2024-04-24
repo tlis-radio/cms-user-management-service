@@ -2,7 +2,11 @@ spec:
   replicas: 1
   imagePullSecrets: ""
 
+environment: ""
+
 config:
+  otel:
+    exporterOtlpEndpoint: ""
   connectionStrings:
     postgres: ""
   jwt:
