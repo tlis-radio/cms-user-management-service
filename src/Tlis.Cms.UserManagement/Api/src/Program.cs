@@ -11,6 +11,8 @@ namespace Tlis.Cms.UserManagement.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            builder.Logging.ConfigureOtel();
+            builder.Services.ConfigureOtel();
             builder.Services.AddMemoryCache();
             builder.Services
                 .AddControllers()
