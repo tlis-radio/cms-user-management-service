@@ -20,18 +20,7 @@ public static class DependencyInjection
             .ValidateDataAnnotations()
             .ValidateOnStart();
 
-        services.AddDbContext<IUserManagementDbContext, UserManagementDbContext>(options =>
-            {
-                options
-                    .UseNpgsql(
-                        configuration.GetConnectionString("Postgres"),
-                        x => x.MigrationsHistoryTable(
-                            HistoryRepository.DefaultTableName, 
-                            "cms_user_management"))
-                    .UseSnakeCaseNamingConvention();
-            },
-            contextLifetime: ServiceLifetime.Transient,
-            optionsLifetime: ServiceLifetime.Singleton);
+        services.AddDbContext(configuration);
         services.AddTransient<IUnitOfWork, UnitOfWork>();
 
         services.AddScoped<ICacheService, CacheService>();
@@ -39,5 +28,19 @@ public static class DependencyInjection
 
         services.AddHttpClient<ITokenProviderService, TokenProviderService>();
         services.AddHttpClient<IAuthProviderManagementService, AuthProviderManagementService>();
+    }
+
+    public static void AddDbContext(this IServiceCollection services, IConfiguration configuration)
+    {
+        services.AddDbContext<IUserManagementDbContext, UserManagementDbContext>(options =>
+            {
+                options
+                    .UseNpgsql(
+                        configuration.GetConnectionString("Postgres"),
+                        x => x.MigrationsHistoryTable(HistoryRepository.DefaultTableName, UserManagementDbContext.SCHEMA))
+                    .UseSnakeCaseNamingConvention();
+            },
+            contextLifetime: ServiceLifetime.Transient,
+            optionsLifetime: ServiceLifetime.Singleton);
     }
 }

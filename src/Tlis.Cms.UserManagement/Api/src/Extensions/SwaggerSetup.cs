@@ -35,7 +35,7 @@ public static class SwaggerSetup
                                 Id = "Bearer"
                             }
                         },
-                        new string[] {}
+                        Array.Empty<string>()
                     }
                 });
         });

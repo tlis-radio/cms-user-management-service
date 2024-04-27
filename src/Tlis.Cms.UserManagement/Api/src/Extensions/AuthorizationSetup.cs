@@ -7,9 +7,7 @@ namespace Tlis.Cms.UserManagement.Api.Extensions;
 
 public static class AuthorizationSetup
 {
-    public static void ConfigureAuthorization(
-        this IServiceCollection services,
-        ConfigurationManager configuration)
+    public static void ConfigureAuthorization(this IServiceCollection services, ConfigurationManager configuration)
     {
         services
             .AddAuthentication(options =>

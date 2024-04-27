@@ -7,6 +7,8 @@ namespace Tlis.Cms.UserManagement.Infrastructure.Persistence;
 public class UserManagementDbContext(DbContextOptions options)
     : DbContext(options), IUserManagementDbContext
 {
+    public readonly static string SCHEMA = "cms_user_management";
+
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
     {
         optionsBuilder.UseExceptionProcessor();
@@ -15,7 +17,7 @@ public class UserManagementDbContext(DbContextOptions options)
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
         modelBuilder.ApplyConfigurationsFromAssembly(typeof(UserManagementDbContext).Assembly);
-        modelBuilder.HasDefaultSchema("cms_user_management");
+        modelBuilder.HasDefaultSchema(SCHEMA);
         base.OnModelCreating(modelBuilder);
     }
 }

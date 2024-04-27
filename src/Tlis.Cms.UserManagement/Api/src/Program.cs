@@ -11,19 +11,20 @@ namespace Tlis.Cms.UserManagement.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            builder.Logging.ConfigureOtel();
-            builder.Services.ConfigureOtel();
-            builder.Services.AddMemoryCache();
             builder.Services
                 .AddControllers()
-                .AddJsonOptions(x =>
+                .AddJsonOptions(options =>
                 {
-                    x.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
+                    options.JsonSerializerOptions.Converters.Add(new JsonStringEnumConverter());
                 });
 
             builder.Services.ConfigureProblemDetails();
             builder.Services.ConfigureSwagger();
             builder.Services.ConfigureAuthorization(builder.Configuration);
+
+            builder.Logging.ConfigureOtel();
+            builder.Services.ConfigureOtel();
+            builder.Services.AddMemoryCache();
 
             builder.Services.AddApplication();
             builder.Services.AddInfrastructure(builder.Configuration);

@@ -35,7 +35,11 @@
     <PackageReference Include="OpenTelemetry.ResourceDetectors.Host" Version="0.1.0-alpha.3" />
   </ItemGroup>
 
-
-
+  <ItemGroup>
+    <Content Update="appsettings.Development.json">
+      <CopyToPublishDirectory>Never</CopyToPublishDirectory>
+      <CopyToOutputDirectory>Never</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
 
 </Project>
