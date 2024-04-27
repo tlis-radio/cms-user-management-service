@@ -24,7 +24,7 @@ spec:
             name: config
             subPath: api.appsettings.Production.json
           ports:
-            - containerPort: 80
+            - containerPort: 8080
               protocol: TCP
           env:
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
