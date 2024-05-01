@@ -7,12 +7,24 @@ on:
       - 'v[0-9]+.[0-9]+.[0-9]+-beta.[0-9]+'
 
 jobs:
-  build-container-and-push-to-acr:
+  build-api-container-and-push-to-acr:
     uses: tlis-radio/cms-workflows/.github/workflows/build-container-and-push-to-acr.yaml@main
     with:
       azure-container-registry: ${{ vars.AZURE_CONTAINER_REGISTRY }}
       release-name: ${{ vars.RELEASE_NAME }}
       image-version: ${{ github.ref_name }}
+      dockerfile: api.Dockerfile
+      environment: production
+    secrets:
+      container-registry-username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}
+      container-registry-password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
+  build-cli-container-and-push-to-acr:
+    uses: tlis-radio/cms-workflows/.github/workflows/build-container-and-push-to-acr.yaml@main
+    with:
+      azure-container-registry: ${{ vars.AZURE_CONTAINER_REGISTRY }}
+      release-name: ${{ vars.RELEASE_NAME }}-cli
+      image-version: ${{ github.sha }}
+      dockerfile: cli.Dockerfile
       environment: production
     secrets:
       container-registry-username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}

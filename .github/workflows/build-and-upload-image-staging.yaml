@@ -4,12 +4,24 @@ on:
   pull_request:
 
 jobs:
-  build-container-and-push-to-acr:
+  build-api-container-and-push-to-acr:
     uses: tlis-radio/cms-workflows/.github/workflows/build-container-and-push-to-acr.yaml@main
     with:
       azure-container-registry: ${{ vars.AZURE_CONTAINER_REGISTRY }}
       release-name: ${{ vars.RELEASE_NAME }}
       image-version: ${{ github.sha }}
+      dockerfile: api.Dockerfile
+      environment: staging
+    secrets:
+      container-registry-username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}
+      container-registry-password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
+  build-cli-container-and-push-to-acr:
+    uses: tlis-radio/cms-workflows/.github/workflows/build-container-and-push-to-acr.yaml@main
+    with:
+      azure-container-registry: ${{ vars.AZURE_CONTAINER_REGISTRY }}
+      release-name: ${{ vars.RELEASE_NAME }}-cli
+      image-version: ${{ github.sha }}
+      dockerfile: cli.Dockerfile
       environment: staging
     secrets:
       container-registry-username: ${{ secrets.CONTAINER_REGISTRY_USERNAME }}
@@ -26,7 +38,7 @@ jobs:
       container-registry-password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
   helm-chart-upgrade:
     uses: tlis-radio/cms-workflows/.github/workflows/helm-chart-upgrade.yaml@main
-    needs: [build-container-and-push-to-acr, build-helm-chart-and-push-to-acr]
+    needs: [build-api-container-and-push-to-acr, build-cli-container-and-push-to-acr, build-helm-chart-and-push-to-acr]
     with:
       azure-k8s-resource-group: K8s
       azure-k8s-cluster-name: tlis-k8s
