@@ -41,7 +41,7 @@ jobs:
       container-registry-password: ${{ secrets.CONTAINER_REGISTRY_PASSWORD }}
   helm-chart-upgrade:
     uses: tlis-radio/cms-workflows/.github/workflows/helm-chart-upgrade.yaml@main
-    needs: [build-container-and-push-to-acr, build-helm-chart-and-push-to-acr]
+    needs: [build-api-container-and-push-to-acr, build-cli-container-and-push-to-acr, build-helm-chart-and-push-to-acr]
     with:
       azure-k8s-resource-group: K8s
       azure-k8s-cluster-name: tlis-k8s
