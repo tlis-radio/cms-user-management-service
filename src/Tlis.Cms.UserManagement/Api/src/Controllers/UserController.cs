@@ -15,7 +15,7 @@ namespace Tlis.Cms.UserManagement.Api.Controllers;
 public sealed class UserController(IMediator mediator) : ControllerBase
 {
     [HttpGet("{id:guid}")]
-    [Authorize(Policy.UserRead)]
+    [AllowAnonymous]
     [SwaggerOperation("Get user's details")]
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(UserDetailsGetResponse), StatusCodes.Status200OK)]
@@ -48,7 +48,7 @@ public sealed class UserController(IMediator mediator) : ControllerBase
     }
 
     [HttpGet("filter")]
-    [Authorize(Policy.UserRead)]
+    [AllowAnonymous]
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(PaginationResponse<UserPaginationGetResponse>), StatusCodes.Status200OK)]
     [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
