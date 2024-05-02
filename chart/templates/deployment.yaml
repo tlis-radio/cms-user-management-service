@@ -20,28 +20,28 @@ spec:
           image: tliscr.azurecr.io/cms-user-management:{{ .Chart.AppVersion }}
           imagePullPolicy: IfNotPresent
           volumeMounts:
-          - mountPath: /app/appsettings.Production.json
+          - mountPath: /app/appsettings.{{ .Values.environment }}.json
             name: config
-            subPath: api.appsettings.Production.json
+            subPath: api.appsettings.json
           ports:
             - containerPort: 8080
               protocol: TCP
           env:
+            - name: ASPNETCORE_ENVIRONMENT
+              value: {{ .Values.environment }}
             - name: OTEL_EXPORTER_OTLP_ENDPOINT
               value: {{ .Values.config.otel.exporterOtlpEndpoint }}
             - name: OTEL_EXPORTER_OTLP_PROTOCOL
               value: otlp
-            - name: OTEL_RESOURCE_ATTRIBUTES
-              value: deployment.environment={{ .Values.environment }}
       initContainers:
         - name: ef-migration
           image: tliscr.azurecr.io/cms-user-management-cli:{{ .Chart.AppVersion }}
           args: ['migration']
           imagePullPolicy: IfNotPresent
           volumeMounts:
-          - mountPath: /app/appsettings.Production.json
+          - mountPath: /app/appsettings.{{ .Values.environment }}.json
             name: config
-            subPath: cli.appsettings.Production.json
+            subPath: cli.appsettings.json
       {{ if .Values.spec.imagePullSecrets }}
       imagePullSecrets:
         - name: {{ .Values.spec.imagePullSecrets | quote }}
