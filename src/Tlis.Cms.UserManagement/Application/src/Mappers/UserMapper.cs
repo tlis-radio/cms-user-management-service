@@ -15,7 +15,13 @@ internal static partial class UserMapper
         var resposne = MapToPaginationDto(entity);
 
         resposne.Roles = entity.RoleHistory.Select(x => x.Role!.Name).ToList();
-        resposne.Status = Enum.GetName(entity.MembershipHistory.OrderByDescending(x => x.ChangeDate).FirstOrDefault()!.Membership!.Status);
+
+        var latestMembership = entity.MembershipHistory.OrderByDescending(x => x.ChangeDate).FirstOrDefault();
+
+        if (latestMembership != null && latestMembership.Membership != null)
+        {
+            resposne.Status = Enum.GetName(latestMembership.Membership.Status);
+        }
 
         return resposne;
     }
