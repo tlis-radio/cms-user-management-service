@@ -43,8 +43,10 @@ internal static partial class UserMapper
     [MapperIgnoreTarget(nameof(User.ProfileImageId))]
     [MapperIgnoreTarget(nameof(User.ExternalId))]
     [MapperIgnoreTarget(nameof(User.MembershipHistory))]
+    [MapperIgnoreTarget(nameof(User.RoleHistory))]
     [MapperIgnoreSource(nameof(UserCreateRequest.Password))]
     [MapperIgnoreSource(nameof(UserCreateRequest.MembershipHistory))]
+    [MapperIgnoreSource(nameof(UserCreateRequest.RoleHistory))]
     public static partial User ToEntity(UserCreateRequest dto);
     
     [MapProperty(nameof(UserRoleHistoryCreateRequest.RoleId), nameof(UserRoleHistory.RoleId))]
