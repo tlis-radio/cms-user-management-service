@@ -62,7 +62,6 @@ internal static partial class UserMapper
     [MapperIgnoreSource(nameof(UserRoleHistory.Id))]
     private static partial UserDetailsGetResponseUserRoleHistory MapToUserDetailsGetResponseUserRoleHistory(UserRoleHistory entity);
 
-    [MapperIgnoreSource(nameof(Role.Id))]
     private static partial UserDetailsGetResponseRole MapToUserDetailsGetResponseRole(Role role);
     
     [MapperIgnoreSource(nameof(UserMembershipHistory.UserId))]
