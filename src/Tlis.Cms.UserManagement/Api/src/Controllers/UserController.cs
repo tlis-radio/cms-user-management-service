@@ -80,46 +80,6 @@ public sealed class UserController(IMediator mediator) : ControllerBase
             : CreatedAtAction(nameof(GetUserDetails), new { response.Id } , response);
     }
 
-    [HttpPost("{id:guid}/role/history")]
-    [Authorize(Policy.UserWrite)]
-    [Produces(MediaTypeNames.Application.Json)]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    [SwaggerOperation("Add new entry into user's role history")]
-    public async ValueTask<ActionResult<BaseCreateResponse>> AddRoleHistoryToUser(
-        [FromRoute] Guid id,
-        [FromBody, Required] RoleHistoryToUserAddRequest request)
-    {
-        request.Id = id;
-
-        var response = await mediator.Send(request);
-
-        return response is null ? BadRequest() : NoContent();
-    }
-
-    [HttpPut("{id:guid}/role/history/{historyId:guid}")]
-    [Authorize(Policy.UserWrite)]
-    [Produces(MediaTypeNames.Application.Json)]
-    [ProducesResponseType(StatusCodes.Status204NoContent)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    [SwaggerOperation("Update user's existing role history")]
-    public async ValueTask<ActionResult> UpdateUserRoleHistory(
-        [FromRoute] Guid id,
-        [FromRoute] Guid historyId,
-        [FromBody, Required] UserRoleHistoryUpdateRequest request)
-    {
-        request.Id = id;
-        request.HistoryId = historyId;
-
-        var response = await mediator.Send(request);
-
-        return response ? NoContent() : BadRequest();
-    }
-
     [HttpPut("{id:guid}")]
     [Authorize(Policy.UserWrite)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
@@ -134,25 +94,6 @@ public sealed class UserController(IMediator mediator) : ControllerBase
         var response = await mediator.Send(request);
 
         return response ? NoContent() : BadRequest();
-    }
-
-    [HttpPost("{id:guid}/membership/history")]
-    [Authorize(Policy.UserWrite)]
-    [Produces(MediaTypeNames.Application.Json)]
-    [ProducesResponseType(StatusCodes.Status201Created)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status400BadRequest)]
-    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
-    [SwaggerOperation("Add new entry into user's membership history")]
-    public async ValueTask<ActionResult<BaseCreateResponse>> AddMembershipHistoryToUser(
-        [FromRoute] Guid id,
-        [FromBody, Required] MembershipHistoryToUserAddRequest request)
-    {
-        request.UserId = id;
-
-        var response = await mediator.Send(request);
-
-        return response is null ? BadRequest() : NoContent();
     }
 
     [HttpDelete("{id:guid}")]

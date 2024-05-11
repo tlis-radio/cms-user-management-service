@@ -1,5 +1,5 @@
 using System;
-using System.ComponentModel;
+using System.Collections.Generic;
 using System.Text.Json.Serialization;
 using MediatR;
 using Swashbuckle.AspNetCore.Annotations;
@@ -26,4 +26,13 @@ public sealed class UserUpdateRequest : IRequest<bool>
     [SwaggerSchema(Description = "User's description or bio")]
     [JsonRequired]
     public string Abouth { get; set; } = null!;
+
+    [JsonRequired]
+    public bool PreferNicknameOverName { get; set; }
+
+    [JsonRequired]
+    public List<UserUpdateRequestRoleHistory> RoleHistory { get; set; } = [];
+
+    [JsonRequired]
+    public List<UserUpdateRequestMembershipHistory> MembershipHistory { get; set; } = [];
 }

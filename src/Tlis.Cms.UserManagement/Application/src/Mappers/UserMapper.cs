@@ -37,8 +37,6 @@ internal static partial class UserMapper
     [MapperIgnoreSource(nameof(User.Id))]
     public static partial UserDetailsGetResponse? ToDto(User? entity);
     
-
-
     [MapperIgnoreTarget(nameof(User.Id))]
     [MapperIgnoreTarget(nameof(User.ProfileImageId))]
     [MapperIgnoreTarget(nameof(User.ExternalId))]
@@ -49,6 +47,34 @@ internal static partial class UserMapper
     [MapperIgnoreSource(nameof(UserCreateRequest.RoleHistory))]
     public static partial User ToEntity(UserCreateRequest dto);
     
+    [MapperIgnoreTarget(nameof(UserRoleHistory.UserId))]
+    [MapperIgnoreTarget(nameof(UserRoleHistory.User))]
+    [MapperIgnoreTarget(nameof(UserRoleHistory.Role))]
+    public static partial UserRoleHistory ToEntity(UserUpdateRequestRoleHistory dto);
+
+    public static UserRoleHistory ToExistingEntity(UserRoleHistory existing, UserUpdateRequestRoleHistory dto)
+    {
+        existing.RoleId = dto.RoleId;
+        existing.FunctionEndDate = dto.FunctionEndDate;
+        existing.FunctionStartDate = dto.FunctionStartDate;
+        existing.Description = dto.Description;
+
+        return existing;
+    }
+
+    [MapperIgnoreTarget(nameof(UserMembershipHistory.UserId))]
+    [MapperIgnoreTarget(nameof(UserMembershipHistory.Membership))]
+    public static partial UserMembershipHistory ToEntity(UserUpdateRequestMembershipHistory dto);
+
+    public static UserMembershipHistory ToExistingEntity(UserMembershipHistory existing, UserUpdateRequestMembershipHistory dto)
+    {
+        existing.MembershipId = dto.MembershipId;
+        existing.ChangeDate = dto.ChangeDate;
+        existing.Description = dto.Description;
+
+        return existing;
+    }
+
     [MapProperty(nameof(UserRoleHistoryCreateRequest.RoleId), nameof(UserRoleHistory.RoleId))]
     [MapperIgnoreTarget(nameof(UserRoleHistory.UserId))]
     [MapperIgnoreTarget(nameof(UserRoleHistory.User))]
@@ -59,14 +85,12 @@ internal static partial class UserMapper
     [MapperIgnoreSource(nameof(UserRoleHistory.UserId))]
     [MapperIgnoreSource(nameof(UserRoleHistory.RoleId))]
     [MapperIgnoreSource(nameof(UserRoleHistory.User))]
-    [MapperIgnoreSource(nameof(UserRoleHistory.Id))]
     private static partial UserDetailsGetResponseUserRoleHistory MapToUserDetailsGetResponseUserRoleHistory(UserRoleHistory entity);
 
     private static partial UserDetailsGetResponseRole MapToUserDetailsGetResponseRole(Role role);
     
     [MapperIgnoreSource(nameof(UserMembershipHistory.UserId))]
     [MapperIgnoreSource(nameof(UserMembershipHistory.MembershipId))]
-    [MapperIgnoreSource(nameof(UserMembershipHistory.Id))]
     private static partial UserDetailsGetResponseUserMembershipHistory MapToUserDetailsGetResponseUserMembershipHistory(UserMembershipHistory entity);
 
     [MapperIgnoreSource(nameof(User.ExternalId))]
