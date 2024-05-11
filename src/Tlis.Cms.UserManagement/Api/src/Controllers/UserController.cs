@@ -107,6 +107,6 @@ public sealed class UserController(IMediator mediator) : ControllerBase
     {
         var response = await mediator.Send(new UserDeleteRequest { Id = id });
 
-        return response ? NotFound() : NoContent();
+        return response ? NoContent() : NotFound();
     }
 }
