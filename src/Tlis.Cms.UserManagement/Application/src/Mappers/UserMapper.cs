@@ -4,6 +4,7 @@ using Riok.Mapperly.Abstractions;
 using Tlis.Cms.UserManagement.Application.Contracts.Api.Requests;
 using Tlis.Cms.UserManagement.Application.Contracts.Api.Responses;
 using Tlis.Cms.UserManagement.Domain.Entities;
+using Tlis.Cms.UserManagement.Infrastructure.HttpServices.Dtos;
 
 namespace Tlis.Cms.UserManagement.Application.Mappers;
 
@@ -34,8 +35,37 @@ internal static partial class UserMapper
     [MapperIgnoreSource(nameof(User.PreferNicknameOverName))]
     public static partial UserFilterGetResponse ToFilterDto(User entity);
 
-    [MapperIgnoreSource(nameof(User.Id))]
-    public static partial UserDetailsGetResponse? ToDto(User? entity);
+    public static UserDetailsGetResponse? ToDto(User? entity, ImageDto? image)
+    {
+        if (entity == null)
+        {
+            return null;
+        }
+
+        var response = new UserDetailsGetResponse
+        {
+            Email = entity.Email,
+            Firstname = entity.Firstname,
+            Lastname = entity.Lastname,
+            Nickname = entity.Nickname,
+            PreferNicknameOverName = entity.PreferNicknameOverName,
+            Abouth = entity.Abouth,
+            ExternalId = entity.ExternalId,
+            MembershipHistory = entity.MembershipHistory.Select(MapToUserDetailsGetResponseUserMembershipHistory).ToList(),
+            RoleHistory = entity.RoleHistory.Select(MapToUserDetailsGetResponseUserRoleHistory).ToList()
+        };
+
+        if (image != null)
+        {
+            response.ProfileImage = new UserDetailsGetResponseImage
+            {
+                Id = image.Id,
+                Url = image.Url
+            };
+        }
+
+        return response;
+    }
     
     [MapperIgnoreTarget(nameof(User.Id))]
     [MapperIgnoreTarget(nameof(User.ProfileImageId))]
