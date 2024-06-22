@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Tlis.Cms.UserManagement.Infrastructure.Configurations;
+using Tlis.Cms.UserManagement.Infrastructure.HttpServices;
+using Tlis.Cms.UserManagement.Infrastructure.HttpServices.Interfaces;
 using Tlis.Cms.UserManagement.Infrastructure.Persistence;
 using Tlis.Cms.UserManagement.Infrastructure.Persistence.Interfaces;
 using Tlis.Cms.UserManagement.Infrastructure.Services;
@@ -14,6 +16,11 @@ public static class DependencyInjection
 {
     public static void AddInfrastructure(this IServiceCollection services, IConfiguration configuration)
     {
+        services
+            .AddOptions<CmsServicesConfiguration>()
+            .Bind(configuration.GetSection("CmsServices"))
+            .ValidateDataAnnotations()
+            .ValidateOnStart();
         services
             .AddOptions<Auth0Configuration>()
             .Bind(configuration.GetSection("Auth0"))
@@ -28,6 +35,9 @@ public static class DependencyInjection
 
         services.AddHttpClient<ITokenProviderService, TokenProviderService>();
         services.AddHttpClient<IAuthProviderManagementService, AuthProviderManagementService>();
+        services
+            .AddHttpClient<IImageManagementHttpService, ImageManagementHttpService>()
+            .AddStandardResilienceHandler();
     }
 
     public static void AddDbContext(this IServiceCollection services, IConfiguration configuration)
