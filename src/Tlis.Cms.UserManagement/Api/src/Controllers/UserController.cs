@@ -96,6 +96,24 @@ public sealed class UserController(IMediator mediator) : ControllerBase
         return response ? NoContent() : BadRequest();
     }
 
+    [HttpPut("{id:guid}/profile-image")]
+    [Authorize(Policy.UserWrite)]
+    [ProducesResponseType(StatusCodes.Status204NoContent)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status401Unauthorized)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status404NotFound)]
+    [ProducesResponseType(typeof(ProblemDetails), StatusCodes.Status500InternalServerError)]
+    [SwaggerOperation("Update user's profile image")]
+    public async ValueTask<ActionResult> UpdateUserProfileImage([FromRoute] Guid id, [FromBody, Required] UserUpdateProfileImageRequest request)
+    {
+        request.Id = id;
+
+        var response = await mediator.Send(request);
+
+        return response
+            ? NoContent()
+            : NotFound();
+    }
+
     [HttpDelete("{id:guid}")]
     [Authorize(Policy.UserDelete)]
     [ProducesResponseType(StatusCodes.Status204NoContent)]
